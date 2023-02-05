@@ -11,6 +11,7 @@ const Preview = () => {
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [blobUrl, setBlobUrl] = useState("myfile.pdf");
+  const [blobUrl2, setBlobUrl2] = useState("myfile.pdf");
   const [name, setName] = useState("Sample Name");
   const [htmlString, setHtmlString] = useState(
     `<body><style>body {background-color: powderblue;}h1   {color: blue;}p    {color: red;}</style><h1>${name}</h1><p>This is a paragraph.</p></body>`
@@ -23,26 +24,27 @@ const Preview = () => {
   }, [name]);
 
   const reloadPreview = async () => {
-    console.log(document.body);
-    doc.html(htmlString, {
-      callback: function (doc) {
-        console.log(doc);
-        var blobPDF = new Blob([doc.output("blob")], {
-          type: "application/pdf",
-        });
-        var blobUrl = URL.createObjectURL(blobPDF);
-        setBlobUrl(blobUrl);
-      },
-      x: 10,
-      y: 10,
-    });
-    doc.output("dataurl");
+    // doc.html(htmlString, {
+    //   callback: function (doc) {
+    //     console.log(doc);
+    //     var blobPDF = new Blob([doc.output("blob")], {
+    //       type: "application/pdf",
+    //     });
+    //     var blobUrl = URL.createObjectURL(blobPDF);
+    //     setBlobUrl(blobUrl);
+    //   },
+    //   x: 10,
+    //   y: 10,
+    // });
+    doc.text(`${name}`, 30, 30);
+    doc.text("Hello world!", 30, 50);
+    setBlobUrl(doc.output("dataurl"));
   };
 
   const download = () => {
     var doc2 = new jsPDF();
     doc2.html(htmlString, {
-      callback: function (doc2) {
+      callback: function (doc2: { save: () => void }) {
         doc2.save();
       },
       x: 10,
