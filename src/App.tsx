@@ -4,16 +4,23 @@ import InputData from "./components/InputData";
 import Preview from "./components/Preview";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const name: string = "Meow";
-  const age: number = 10;
+  const [userInfo, setUserInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: ""
+  });
+
+  const changeHandler = ({e}: {e: any}) => {
+    setUserInfo( prevValues => {
+      return { ...prevValues, [e.target.name]: e.target.value}
+    })
+    // https://stackoverflow.com/questions/59813926/how-can-i-store-and-update-multiple-values-in-react-usestate
+  }
 
   return (
     <div className="App">
-      
-      <button>Button</button>
       <hr></hr>
-      <InputData name={name} age={age} />
+      <InputData />
       <hr></hr>
       <ChooseTemplate />
       <hr></hr>
@@ -23,9 +30,3 @@ function App() {
 }
 
 export default App;
-
-// FUNCTIONS
-// function functionName(params) {
-// }
-// const functionName = (params) => {
-// }
