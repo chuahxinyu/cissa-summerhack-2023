@@ -11,6 +11,7 @@ interface TextInputFieldProps {
 const TextInputField: React.FC<TextInputFieldProps> = ({name, label, placeholder}) => {
     return <div className="TextInputField">
         <Field 
+        fullWidth
         as={TextField} 
         label={label}
         name={name}
