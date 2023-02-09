@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.vite";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { IResumeData } from "../types/IResumeData";
+import { IResumeData } from "./types";
 
 const Preview = () => {
   var doc = new jsPDF();
@@ -14,31 +14,26 @@ const Preview = () => {
   const [blobUrl2, setBlobUrl2] = useState("myfile.pdf");
   const [name, setName] = useState("Sample Name");
   const [htmlString, setHtmlString] = useState(
-    `<body><style>body {background-color: powderblue;}h1   {color: blue;}p    {color: red;}</style><h1>${name}</h1><p>This is a paragraph.</p></body>`
+    `<body><h1>${name}</h1><p>This&nbsp;is&nbsp;a paragraph.</p></body>`
   );
 
-  useEffect(() => {
-    setHtmlString(
-      `<body><style>body {background-color: powderblue;}h1   {color: blue;}p    {color: red;}</style><h1>${name}</h1><p>This is a paragraph.</p></body>`
-    );
-  }, [name]);
-
   const reloadPreview = async () => {
-    // doc.html(htmlString, {
-    //   callback: function (doc) {
-    //     console.log(doc);
-    //     var blobPDF = new Blob([doc.output("blob")], {
-    //       type: "application/pdf",
-    //     });
-    //     var blobUrl = URL.createObjectURL(blobPDF);
-    //     setBlobUrl(blobUrl);
-    //   },
-    //   x: 10,
-    //   y: 10,
-    // });
-    doc.text(`${name}`, 30, 30);
-    doc.text("Hello world!", 30, 50);
-    setBlobUrl(doc.output("dataurl"));
+    let text = htmlString.replaceAll(" ", "&nbsp;");
+    setHtmlString(text);
+    console.log(text);
+    console.log(htmlString);
+    doc.html(text, {
+      callback: function (doc) {
+        let blobPDF = new Blob([doc.output("blob")], {
+          type: "application/pdf",
+        });
+        let blobUrl = URL.createObjectURL(blobPDF);
+        setBlobUrl(blobUrl);
+      },
+      x: 10,
+      y: 10,
+    });
+    // setBlobUrl(doc.output("dataurl"));
   };
 
   const download = () => {
