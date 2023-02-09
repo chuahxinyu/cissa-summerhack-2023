@@ -10,9 +10,6 @@ function App() {
 
   return (
     <div className="App">
-      
-      <button>Button</button>
-      <hr></hr>
       <InputData name={name} age={age} />
       <hr></hr>
       <ChooseTemplate />

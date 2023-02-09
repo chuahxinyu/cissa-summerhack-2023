@@ -5,24 +5,37 @@ import { Document, Page } from "react-pdf/dist/esm/entry.vite";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { IResumeData } from "./types";
+import { testTemplate } from "../templates/testTemplate";
 
 const Preview = () => {
   var doc = new jsPDF();
-  const [numPages, setNumPages] = useState(0);
-  const [pageNumber, setPageNumber] = useState(0);
-  const [blobUrl, setBlobUrl] = useState("myfile.pdf");
-  const [blobUrl2, setBlobUrl2] = useState("myfile.pdf");
-  const [name, setName] = useState("Sample Name");
-  const [htmlString, setHtmlString] = useState(
-    `<body><h1>${name}</h1><p>This&nbsp;is&nbsp;a paragraph.</p></body>`
-  );
+  const [numPages, setNumPages] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [blobUrl, setBlobUrl] = useState("");
+  const [jsonString, setJsonString] = useState(
+  `{
+    "template": "test",
+    "aboutMe": {
+      "name": "test",
+      "email": "test@test.com",
+      "phoneNo": "123456789",
+      "jobTitle": "test job title"
+    }, 
+    "sections": [] 
+}`);
+
+  const [htmlString, setHtmlString] = useState("");
 
   const reloadPreview = async () => {
-    let text = htmlString.replaceAll(" ", "&nbsp;");
-    setHtmlString(text);
-    console.log(text);
-    console.log(htmlString);
-    doc.html(text, {
+    const removedWhitespace = jsonString.replace(/\s/g, "");
+    console.log(removedWhitespace)
+    const resumeData = JSON.parse(removedWhitespace);
+    console.log(JSON.stringify(resumeData, null, 2))
+    const htmlStringTemp = testTemplate(resumeData)
+    setHtmlString(htmlStringTemp)
+    console.log({htmlStringTemp: htmlStringTemp, htmlString: htmlString})
+
+    doc.html(htmlStringTemp, {
       callback: function (doc) {
         let blobPDF = new Blob([doc.output("blob")], {
           type: "application/pdf",
@@ -33,7 +46,6 @@ const Preview = () => {
       x: 10,
       y: 10,
     });
-    // setBlobUrl(doc.output("dataurl"));
   };
 
   const download = () => {
@@ -50,19 +62,18 @@ const Preview = () => {
   return (
     <div>
       <Button variant="contained" onClick={() => download()}>
-        {" "}
         Download
       </Button>
       <h1>Preview</h1>
+      
       <TextField
-        required
-        id="outlined-required"
-        label="name"
-        value={name}
-        onChange={(e) => setName(e.currentTarget.value)}
-      />
-      <hr />
-      {blobUrl}
+          id="outlined-multiline-static"
+          label="JSON Input"
+          multiline
+          rows={10}
+          value={jsonString}
+          onChange={(e) => setJsonString(e.currentTarget.value)}
+        />{blobUrl}
       <Button variant="contained" onClick={() => reloadPreview()}>
         Reload Preview
       </Button>

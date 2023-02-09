@@ -1,11 +1,14 @@
 import { Button } from '@mui/material';
 import React from 'react'
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const ChooseTemplate = () => {
   return (
     <div>
-      ChooseTemplate
-      <Button variant="contained">Contained</Button>
+      <Typography variant="h1" gutterBottom>
+        h1. Heading
+      </Typography>
     </div>
   );
 }

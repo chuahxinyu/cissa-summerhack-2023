@@ -12,6 +12,7 @@ export interface IAboutMeSection {
   email?: string; // TODO FORMIK email validation
   phoneNo?: string; // TODO FORMIK phone number validation
   address?: string;
+  jobTitle?: string;
   links: string[]; // like LinkedIn, Website etc. -- TODO Markdown link parsing?
 }
 
