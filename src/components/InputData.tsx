@@ -25,8 +25,6 @@ const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
     .email("Invalid email address")
     .required("Required"),
   phoneNo: Yup.number()
-    .min(10, "Not a valid phone number")
-    .max(10, "Not a valid phone number")
     .typeError("Must be a number")
     .required("Required"),
   address: Yup.string()
