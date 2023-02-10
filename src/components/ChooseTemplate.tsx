@@ -42,7 +42,7 @@ const ChooseTemplate = ({ setResumeData }: { setResumeData: Dispatch<SetStateAct
       </Typography>
       <Container style={{ width: '100%', overflow: 'auto', display: 'flex' }}>
         {templates.map((template, i) => (
-          <Container>
+          <Container key={i}>
             <Card
               variant="outlined"
               key={i}
