@@ -6,6 +6,8 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { IResumeData } from './types';
 import { testTemplate } from '../templates/testTemplate';
+import { template1 } from '../templates/template1';
+import { removeSpaces } from '../utils/removeSpaces';
 
 const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   var doc = new jsPDF();
@@ -20,15 +22,12 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   }, []);
 
   const reloadPreview = async () => {
-    // const removedWhitespace = jsonString.replace(/\s/g, ''); // &nbsp;
-    // console.log(removedWhitespace);
-    // const resumeData = JSON.parse(removedWhitespace);
-    // console.log(JSON.stringify(resumeData, null, 2));
-
-    const htmlStringTemp = testTemplate(resumeData);
+    const template = resumeData.template;
+    let htmlStringTemp = testTemplate(removeSpaces(resumeData));
+    if (template === 'Template 1 Name') {
+      htmlStringTemp = template1(resumeData);
+    }
     setHtmlString(htmlStringTemp);
-    console.log({ htmlStringTemp: htmlStringTemp, htmlString: htmlString });
-
     doc.html(htmlStringTemp, {
       callback: function (doc) {
         let blobPDF = new Blob([doc.output('blob')], {
