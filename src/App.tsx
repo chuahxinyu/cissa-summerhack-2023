@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ChooseTemplate from './components/ChooseTemplate';
+import ChooseTemplate from './components/ChooseTemplate/ChooseTemplate';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
 import { IResumeData } from './components/types';
@@ -10,16 +10,11 @@ function App() {
     aboutMe: { name: '' },
     sections: [],
   });
-  const [count, setCount] = useState<number>(1);
 
   return (
     <div className="App">
-      <p>resumeData: {JSON.stringify(resumeData, null, 2)}</p>
-      <hr></hr>
       <InputData setResumeData={setResumeData} />
-      <hr></hr>
-      <ChooseTemplate />
-      <hr></hr>
+      <ChooseTemplate setResumeData={setResumeData} />
       <Preview resumeData={resumeData} />
     </div>
   );
