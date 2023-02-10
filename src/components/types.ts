@@ -9,11 +9,12 @@ export interface IResumeData {
 /* ABOUT ME SECTION */
 export interface IAboutMeSection {
   name: string;
-  email?: string; // TODO FORMIK email validation
-  phoneNo?: string; // TODO FORMIK phone number validation
+  lastName?: string;
+  email?: string;
+  phoneNo?: string;
   address?: string;
   jobTitle?: string;
-  links: string[]; // like LinkedIn, Website etc. -- TODO Markdown link parsing?
+  links?: string[];
 }
 
 /* DETAILED SECTION AND SUBSECTION */

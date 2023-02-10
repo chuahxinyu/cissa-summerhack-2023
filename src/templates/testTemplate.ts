@@ -2,7 +2,6 @@ import { IResumeData } from "../components/types"
 
 export const testTemplate = (resumeData: IResumeData) => {
     const aboutMeData = resumeData.aboutMe;
-    console.log(aboutMeData)
     const template = {
         get hd() {
             return `<div id="hd">
