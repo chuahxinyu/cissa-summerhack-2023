@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ChooseTemplate from './components/ChooseTemplate/ChooseTemplate';
+import ChooseTemplate from './components/ChooseTemplate';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
 import { IResumeData } from './components/types';
