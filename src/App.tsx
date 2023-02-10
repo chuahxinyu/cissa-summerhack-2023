@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <p>userInfo: {JSON.stringify(resumeData, null, 2)}</p>
+      <p>resumeData: {JSON.stringify(resumeData, null, 2)}</p>
       <hr></hr>
       <InputData setResumeData={setResumeData} />
       <hr></hr>
