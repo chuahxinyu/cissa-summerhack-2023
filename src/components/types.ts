@@ -1,4 +1,4 @@
-export type TemplateOptions = 'Template 1 Name' | 'Template 2 Name' | 'Template 3 Name';
+export type TemplateOptions = 'Template 1 Name' | 'Template 2 Name' | 'Template 3 Name' | 'Template 4 Name';
 
 export interface IResumeData {
   template: TemplateOptions;
@@ -7,6 +7,10 @@ export interface IResumeData {
 }
 
 /* ABOUT ME SECTION */
+export interface ILink {
+  label: string;
+  url: string;
+}
 export interface IAboutMeSection {
   name: string;
   lastName?: string;
@@ -14,7 +18,7 @@ export interface IAboutMeSection {
   phoneNo?: string;
   address?: string;
   jobTitle?: string;
-  links?: string[];
+  links?: ILink[];
 }
 
 /* DETAILED SECTION AND SUBSECTION */

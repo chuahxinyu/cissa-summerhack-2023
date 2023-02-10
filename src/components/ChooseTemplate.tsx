@@ -1,13 +1,19 @@
 import Typography from '@mui/material/Typography';
 import { Card, CardActionArea, CardContent, CardMedia, Container, Grid } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { IResumeData } from './types';
+import { IResumeData, TemplateOptions } from './types';
 import '../App.css';
 
+interface ITemplate {
+  name: TemplateOptions;
+  description: string;
+  imagePath?: string;
+}
+
 const ChooseTemplate = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<IResumeData>> }) => {
-  const [selectedTemplate, setSelectedTemplate] = useState('Template 1 Name');
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateOptions>('Template 1 Name');
   const [hoveredTemplate, setHoveredTemplate] = useState('');
-  const templates = [
+  const templates: ITemplate[] = [
     {
       name: 'Template 1 Name',
       description: 'template description...',
@@ -46,7 +52,10 @@ const ChooseTemplate = ({ setResumeData }: { setResumeData: Dispatch<SetStateAct
                 height: '28rem',
               }}>
               <CardActionArea
-                onClick={() => setSelectedTemplate(template.name)}
+                onClick={() => {
+                  setSelectedTemplate(template.name);
+                  setResumeData((prevState) => ({ ...prevState, template: template.name }));
+                }}
                 onMouseOver={() => setHoveredTemplate(template.name)}
                 style={{
                   width: '20rem',

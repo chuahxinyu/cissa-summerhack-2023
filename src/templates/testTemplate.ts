@@ -1,10 +1,10 @@
-import { IResumeData } from "../components/types"
+import { IResumeData } from '../components/types';
 
 export const testTemplate = (resumeData: IResumeData) => {
-    const aboutMeData = resumeData.aboutMe;
-    const template = {
-        get hd() {
-            return `<div id="hd">
+  const aboutMeData = resumeData.aboutMe;
+  const template = {
+    get hd() {
+      return `<div id="hd">
             <div class="yui-gc">
                 <div class="yui-u first">
                     <h1>${aboutMeData.name}</h1>
@@ -18,10 +18,10 @@ export const testTemplate = (resumeData: IResumeData) => {
                     </div><!--// .contact-info -->
                 </div>
             </div><!--// .yui-gc -->
-        </div><!--// hd -->`
-        },
-        get bd() {
-            return `
+        </div><!--// hd -->`;
+    },
+    get bd() {
+      return `
                 <div id="bd">
                     <div id="yui-main">
                         <div class="yui-b">
@@ -139,11 +139,10 @@ export const testTemplate = (resumeData: IResumeData) => {
         
                         </div><!--// .yui-b -->
                     </div><!--// yui-main -->
-            `
-        }
-    }
-    const res = '<body>' + template.hd + '</body>'
-    console.log({res: res})
+            `;
+    },
+  };
+  const res = '<body>' + template.hd + '</body>';
 
-    return res
-}
+  return res;
+};
