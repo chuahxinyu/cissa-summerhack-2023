@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import jsPDF from 'jspdf';
 import React, { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
@@ -12,20 +12,12 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   const [numPages, setNumPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [blobUrl, setBlobUrl] = useState('');
-  const [jsonString, setJsonString] = useState(
-    `{
-    "template": "test",
-    "aboutMe": {
-      "name": "hank green",
-      "email": "test@test.com",
-      "phoneNo": "123456789",
-      "jobTitle": "test job title"
-    }, 
-    "sections": [] 
-}`,
-  );
 
   const [htmlString, setHtmlString] = useState('');
+
+  useEffect(() => {
+    reloadPreview();
+  }, []);
 
   const reloadPreview = async () => {
     // const removedWhitespace = jsonString.replace(/\s/g, ''); // &nbsp;
@@ -55,54 +47,54 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   };
 
   return (
-    <div>
-      <Button variant="contained" onClick={() => download()}>
-        Download
-      </Button>
-      <h1>Preview</h1>
-
-      {/* <TextField
-          id="outlined-multiline-static"
-          label="JSON Input"
-          multiline
-          rows={10}
-          value={jsonString}
-          onChange={(e) => setJsonString(e.currentTarget.value)}
-        /> */}
-      {blobUrl}
+    <Container>
+      <Typography variant="h2" gutterBottom>
+        3. Download your resume
+      </Typography>
       <Button variant="contained" onClick={() => reloadPreview()}>
         Reload Preview
       </Button>
-      <Document
-        file={blobUrl}
-        onLoadSuccess={({ numPages }) => {
-          setNumPages(numPages);
-          setPageNumber(1);
-        }}>
-        <Page pageNumber={pageNumber} />
-      </Document>
-      <div>
-        <p>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        textAlign="center"
+        minHeight="100vh">
+        <Document
+          file={blobUrl}
+          onLoadSuccess={({ numPages }) => {
+            setNumPages(numPages);
+            setPageNumber(1);
+          }}>
+          <Page pageNumber={pageNumber} />
+        </Document>
+        <Typography variant="body1">
           Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
-        </p>
-        <Button
-          type="button"
-          disabled={pageNumber <= 1}
-          onClick={() => {
-            setPageNumber((prevPage) => prevPage - 1);
-          }}>
-          Previous
-        </Button>
-        <Button
-          type="button"
-          disabled={pageNumber >= numPages}
-          onClick={() => {
-            setPageNumber((prevPage) => prevPage + 1);
-          }}>
-          Next
-        </Button>
-      </div>
-    </div>
+        </Typography>
+        <div>
+          <Button
+            type="button"
+            disabled={pageNumber <= 1}
+            onClick={() => {
+              setPageNumber((prevPage) => prevPage - 1);
+            }}>
+            Previous
+          </Button>
+          <Button
+            type="button"
+            disabled={pageNumber >= numPages}
+            onClick={() => {
+              setPageNumber((prevPage) => prevPage + 1);
+            }}>
+            Next
+          </Button>
+          <Button variant="contained" onClick={() => download()}>
+            Download
+          </Button>
+        </div>
+      </Box>
+    </Container>
   );
 };
 

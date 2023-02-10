@@ -68,7 +68,6 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
                     <TextInputField label="Address" name="address" placeholder="e.g. 111 Potato Rd, Potato, POT 3000" />
                   </Grid>
                 </Grid>
-
                 <Grid container item spacing={2} id="jobTitleField">
                   <Grid item xs={12}>
                     <Typography>Job Title</Typography>
@@ -78,7 +77,6 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
                   </Grid>
                 </Grid>
               </Grid>
-
               <Grid container item spacing={2} id="profile">
                 <Grid item xs={12}>
                   <Typography>Profile</Typography>
