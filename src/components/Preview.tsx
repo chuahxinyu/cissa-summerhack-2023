@@ -15,11 +15,12 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [blobUrl, setBlobUrl] = useState('');
 
-  const [htmlString, setHtmlString] = useState('');
-
+  /**
+   * Automatically reload preview when resume data changes.
+   */
   useEffect(() => {
     reloadPreview();
-  }, []);
+  }, [resumeData]);
 
   const reloadPreview = async () => {
     const template = resumeData.template;
@@ -27,7 +28,6 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     if (template === 'Template 1 Name') {
       htmlStringTemp = template1(resumeData);
     }
-    setHtmlString(htmlStringTemp);
     doc.html(htmlStringTemp, {
       callback: function (doc) {
         let blobPDF = new Blob([doc.output('blob')], {
@@ -50,9 +50,6 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
       <Typography variant="h2" gutterBottom>
         3. Download your resume
       </Typography>
-      <Button variant="contained" onClick={() => reloadPreview()}>
-        Reload Preview
-      </Button>
       <Box
         display="flex"
         flexDirection="column"
