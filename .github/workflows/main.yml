@@ -19,6 +19,6 @@ jobs:
         with:
           node-version: 19
       - name: Linting
-        run: npm format:lint:fix
+        run: npm run format:lint:fix
       - name: Build app
         run: npm run build
