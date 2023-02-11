@@ -22,6 +22,7 @@ const BulletSection = ({ section, index }: { section: IBulletSection; index: num
             <Grid container item direction="column" id="bulletSectionTitleField">
               {section.bullets.map((bullet, bulletIndex) => (
                 <TextInputField
+                  key={bulletIndex}
                   label="Bullet Point"
                   name={`sections.${index}.bullets.${bulletIndex}.text`}
                   placeholder="e.g. Coding Languages: TypeScript, C++, Java, Python"
