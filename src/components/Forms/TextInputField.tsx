@@ -9,7 +9,12 @@ interface TextInputFieldProps {
   size?: string;
 }
 
-const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholder, size }) => {
+const TextInputField: React.FC<TextInputFieldProps> = ({
+  name,
+  label,
+  placeholder,
+  size,
+}) => {
   return (
     <div className="TextInputField">
       <Field

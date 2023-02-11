@@ -36,7 +36,11 @@ const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
   jobTitle: Yup.string(),
 });
 
-const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<IResumeData>> }) => {
+const InputData = ({
+  setResumeData,
+}: {
+  setResumeData: Dispatch<SetStateAction<IResumeData>>;
+}) => {
   return (
     <Container>
       <Typography variant="h2">1. Your Information</Typography>
@@ -45,11 +49,15 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             console.log(values);
-            setResumeData((prevState) => ({ ...prevState, aboutMe: values.aboutMe }));
+            setResumeData((prevState) => ({
+              ...prevState,
+              aboutMe: values.aboutMe,
+            }));
             setSubmitting(false);
           }, 400);
         }}
-        validationSchema={ERROR_MESSAGE_SCHEMA}>
+        validationSchema={ERROR_MESSAGE_SCHEMA}
+      >
         {({ dirty, isValid, values }) => (
           <Form>
             <AboutMe />
@@ -69,13 +77,21 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
                         />
                       ),
                     )}
-                  <button type="button" className="secondary" onClick={() => push(INITIAL_BULLET)}>
+                  <button
+                    type="button"
+                    className="secondary"
+                    onClick={() => push(INITIAL_BULLET)}
+                  >
                     Add Bullet Section
                   </button>
                 </Grid>
               )}
             </FieldArray>
-            <Button disabled={!dirty || !isValid} type="submit" variant="contained">
+            <Button
+              disabled={!dirty || !isValid}
+              type="submit"
+              variant="contained"
+            >
               Submit
             </Button>
           </Form>

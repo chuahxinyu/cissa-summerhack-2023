@@ -6,13 +6,18 @@ export const template1 = (resumeData: IResumeData) => {
   const temp = {
     get aboutMeString() {
       return `<header>
-                <h2>${aboutMe.name}${aboutMe.lastName ? ' ' + aboutMe.lastName : null}</h2>
+                <h2>${aboutMe.name}${
+        aboutMe.lastName ? ' ' + aboutMe.lastName : null
+      }</h2>
                 <ul id="header-left" title="mail and phone">
                     ${aboutMe.address ? `<li>${aboutMe.address}</li>` : null}
                     ${aboutMe.phoneNo ? `<li>${aboutMe.phoneNo}</li>` : null}
                 </ul>
                 <ul id="header-right" title="web">
-                    ${aboutMe.links?.map((link) => `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`)}
+                    ${aboutMe.links?.map(
+                      (link) =>
+                        `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`,
+                    )}
                 </ul>
             </header>`;
     },

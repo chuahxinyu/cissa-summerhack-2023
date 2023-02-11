@@ -7,7 +7,7 @@ export const removeSpaces = (thing: any): any => {
     const removedWhitespace = thing.replace(/\s/g, '&nbsp;');
     return removedWhitespace;
   }
-  for (var prop in thing) {
+  for (const prop in thing) {
     if (!(prop === 'template')) {
       thing[prop] = removeSpaces(thing[prop]);
     }
