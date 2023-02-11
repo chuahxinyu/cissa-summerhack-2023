@@ -11,11 +11,20 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "npx prettier ./src/**/*.{ts,tsx} --check",
     "format:fix": "npm run format -- --write",
-    "format:lint:fix": "npm run format:fix && npm run lint:fix"
+    "format:lint:fix": "npm run format:fix && npm run lint:fix",
+    "lint:staged": "lint-staged"
   },
   "precommit": [
-    "format:lint:fix"
+    "lint:staged"
   ],
+  "lint-staged": {
+    "./app/**/*.{ts,tsx}": [
+      "npm run format:lint:fix"
+    ],
+    "./**/*.json": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
