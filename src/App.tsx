@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ChooseTemplate from './components/ChooseTemplate';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
@@ -10,6 +10,17 @@ function App() {
     aboutMe: { name: '' },
     sections: [],
   });
+
+  useEffect(() => {
+    localStorage.setItem('resumeData', JSON.stringify(resumeData));
+  }, [resumeData]);
+
+  useEffect(() => {
+    let data = localStorage.getItem('resumeData');
+    if (data !== null) {
+      setResumeData(JSON.parse(data));
+    }
+  }, []);
 
   return (
     <div className="App">
