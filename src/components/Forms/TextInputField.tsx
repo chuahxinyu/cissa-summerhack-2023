@@ -5,7 +5,7 @@ import { ErrorMessage, Field } from 'formik';
 interface TextInputFieldProps {
     name: string;
     label: string;
-    placeholder: string;
+    placeholder?: string;
 }
 
 const TextInputField: React.FC<TextInputFieldProps> = ({name, label, placeholder}) => {
