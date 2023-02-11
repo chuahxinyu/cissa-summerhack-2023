@@ -1,7 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { Button, Container, Grid, Typography } from '@material-ui/core/';
+import { Grid, Typography } from '@material-ui/core/';
 import TextInputField from '../Forms/TextInputField';
 import { IAboutMeSection, IResumeData } from '../types';
 
@@ -50,9 +48,6 @@ const AboutMe = () => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} id="jobTitleField">
-          <Grid item xs={12}>
-            <Typography>Job Title</Typography>
-          </Grid>
           <Grid item xs>
             <TextInputField label="Job Title" name="jobTitle" placeholder="e.g. Graphic Designer" />
           </Grid>
