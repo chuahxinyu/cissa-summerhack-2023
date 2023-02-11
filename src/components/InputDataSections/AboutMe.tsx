@@ -2,8 +2,11 @@ import * as Yup from 'yup';
 import { Grid } from '@mui/material';
 import { IAboutMeSection } from '../types';
 import TextInputField from '../Forms/TextInputField';
+import { useFormikContext } from 'formik';
 
 const AboutMe = () => {
+  // Grab values and submitForm from context
+  const { values, submitForm } = useFormikContext();
   return (
     <Grid container item spacing={0} id="aboutMe">
       <Grid container item spacing={2} id="name">

@@ -14,6 +14,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   const [numPages, setNumPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [blobUrl, setBlobUrl] = useState('');
+  const [isUpdatedBlob, setIsUpdatedBlob] = useState(false);
 
   /**
    * Automatically reload preview when resume data changes.
@@ -32,15 +33,15 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     if (template === 'Template 1 Name') {
       htmlStringTemp = template1(resumeDataCopy);
     }
-
-    // Create Document Blob usng HTML and jsPdf
-    doc.html(htmlStringTemp, {
-      callback: function (doc: { output: (arg0: string) => BlobPart; }) {
+    let isBlobUrlSet = false;
+    await doc.html(htmlStringTemp, {
+      callback: async function (doc: { output: (arg0: string) => BlobPart }) {
         let blobPDF = new Blob([doc.output('blob')], {
           type: 'application/pdf',
         });
         let blobUrl = URL.createObjectURL(blobPDF);
         setBlobUrl(blobUrl);
+        isBlobUrlSet = true;
       },
       x: 10,
       y: 10,

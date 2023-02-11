@@ -28,6 +28,8 @@ function App() {
     }
   }, [resumeData]);
 
+  console.log({ resumeDataApp: resumeData });
+
   return (
     <div className="App">
       <InputData setResumeData={setResumeData} resumeData={resumeData} />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { ErrorMessage, Field } from 'formik';
+import { ErrorMessage, Field, useFormikContext } from 'formik';
+import { IResumeData } from '../types';
 
 interface TextInputFieldProps {
   name: string;
@@ -11,6 +12,24 @@ interface TextInputFieldProps {
 }
 
 const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholder, size, onKeyPress }) => {
+  // Grab values and submitForm from context
+  const { values, submitForm } = useFormikContext<IResumeData>();
+  let hasValue = false
+  const dotPropsToBracketProps = (name: string) => {
+    const splitName = name.split('.');
+    if (splitName.length === 0) {
+      return '';
+    }
+    let res = values;
+    for (const prop of splitName) {
+      res = (res as any)[prop];
+    }
+
+    if (res)
+      hasValue = true;
+
+    return res;
+  };
   return (
     <div className="TextInputField">
       {onKeyPress !== undefined ? (
@@ -23,7 +42,8 @@ const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholde
           margin={size === 'small' ? 'dense' : 'normal'}
           helperText={<ErrorMessage name={name} />}
           onKeyPress={(e) => onKeyPress(e)}
-          InputLabelProps={{ shrink: true }}
+          value={dotPropsToBracketProps(name)}
+          InputLabelProps={{ shrink: hasValue }}
         />
       ) : (
         <Field
@@ -35,7 +55,8 @@ const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholde
           size={size ? size : ''}
           margin={size === 'small' ? 'dense' : 'normal'}
           helperText={<ErrorMessage name={name} />}
-          InputLabelProps={{ shrink: true }}
+          value={dotPropsToBracketProps(name)}
+          InputLabelProps={{ shrink: hasValue }}
         />
       )}
     </div>

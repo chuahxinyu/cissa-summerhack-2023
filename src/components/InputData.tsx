@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Formik, Form, FieldArray } from 'formik';
+import { Formik, Form, FieldArray, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import { Button, Container, Grid, Typography } from '@mui/material';
 import AboutMe from './InputDataSections/AboutMe';
@@ -87,8 +87,8 @@ const InputData = ({
                 </Grid>
               )}
             </FieldArray>
-            <Button disabled={!dirty || !isValid} type="submit" variant="contained">
-              Submit
+            <Button disabled={!isValid} type="submit" variant="contained">
+              Reload
             </Button>
           </Form>
         )}
