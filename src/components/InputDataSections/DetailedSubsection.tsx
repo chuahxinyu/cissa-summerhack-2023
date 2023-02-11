@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import {Grid, Typography } from '@material-ui/core/';
+import { Grid, Typography } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { IDetailedSubsection, BulletPoint} from '../types';
 
@@ -23,8 +23,6 @@ const defaultProps: DetailedSubsectionProps = {
   hasDate: false,
   hasLocation: false,
 };
-
-// title:
 
 const DetailedSubsection: React.FC<DetailedSubsectionProps> = ({titlesName, subtitlesName, hasDate, hasLocation}) => {
   return (

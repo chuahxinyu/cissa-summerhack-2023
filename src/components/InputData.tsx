@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Formik, Form, FieldArray, Field } from 'formik';
 import * as Yup from 'yup';
-import { Button, Container, Grid, Typography } from '@material-ui/core/';
+import { Button, Container, Grid, Typography } from '@mui/material';
 import AboutMe from './InputDataSections/AboutMe';
 import { IAboutMeSection, IBulletSection, IResumeData } from './types';
 import BulletSection from './InputDataSections/BulletSection';
@@ -45,7 +45,7 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             console.log(values);
-            // setResumeData((prevState) => ({ ...prevState, aboutMe: values }));
+            setResumeData((prevState) => ({ ...prevState, aboutMe: values.aboutMe }));
             setSubmitting(false);
           }, 400);
         }}
@@ -58,7 +58,16 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
                 <Grid>
                   {values.sections.length > 0 &&
                     values.sections.map((section, index) =>
-                      section.sectionType === 'bullet' ? <BulletSection section={section} /> : <DetailedSection name="Education" titlesName="Educational Institution" hasDate={true} hasLocation ={true} />
+                      section.sectionType === 'bullet' ? (
+                        <BulletSection section={section} />
+                      ) : (
+                        <DetailedSection
+                          name="Education"
+                          titlesName="Educational Institution"
+                          hasDate={true}
+                          hasLocation={true}
+                        />
+                      ),
                     )}
                   <button type="button" className="secondary" onClick={() => push(INITIAL_BULLET)}>
                     Add Bullet Section

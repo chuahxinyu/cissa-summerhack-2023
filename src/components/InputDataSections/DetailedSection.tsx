@@ -1,12 +1,8 @@
-import {Grid, Typography } from '@material-ui/core/';
+import { Grid, Typography } from '@mui/material';
 import { string } from 'yup/lib/locale';
 import { IDetailedSection, IDetailedSubsection} from '../types';
 import DetailedSubsection from './DetailedSubsection';
 
-const INITIAL_FORM_STATE: IDetailedSection = {
-    sectionTitle: '',
-    subSections: [] as Array<IDetailedSubsection>,
-};
 
 interface DetailedSectionProps {
     name: string;
