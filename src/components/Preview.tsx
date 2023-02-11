@@ -10,7 +10,7 @@ import { template1 } from '../templates/template1';
 import { removeSpaces } from '../utils/removeSpaces';
 
 const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
-  var doc = new jsPDF();
+  const doc = new jsPDF();
   const [numPages, setNumPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [blobUrl, setBlobUrl] = useState('');
@@ -25,7 +25,9 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   const reloadPreview = async () => {
     // Get Template and Remove Spaces from resumeData
     const template = resumeData.template;
-    const resumeDataCopy: IResumeData = removeSpaces(JSON.parse(JSON.stringify(resumeData)));
+    const resumeDataCopy: IResumeData = removeSpaces(
+      JSON.parse(JSON.stringify(resumeData)),
+    );
 
     // Generate HTML String based on Template
     let htmlStringTemp = testTemplate(resumeDataCopy);
@@ -36,10 +38,10 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     // Create Document Blob usng HTML and jsPdf
     doc.html(htmlStringTemp, {
       callback: function (doc) {
-        let blobPDF = new Blob([doc.output('blob')], {
+        const blobPDF = new Blob([doc.output('blob')], {
           type: 'application/pdf',
         });
-        let blobUrl = URL.createObjectURL(blobPDF);
+        const blobUrl = URL.createObjectURL(blobPDF);
         setBlobUrl(blobUrl);
       },
       x: 10,
@@ -62,13 +64,15 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
         justifyContent="center"
         alignItems="center"
         textAlign="center"
-        minHeight="100vh">
+        minHeight="100vh"
+      >
         <Document
           file={blobUrl}
           onLoadSuccess={({ numPages }) => {
             setNumPages(numPages);
             setPageNumber(1);
-          }}>
+          }}
+        >
           <Page pageNumber={pageNumber} />
         </Document>
         <Typography variant="body1">
@@ -80,7 +84,8 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
             disabled={pageNumber <= 1}
             onClick={() => {
               setPageNumber((prevPage) => prevPage - 1);
-            }}>
+            }}
+          >
             Previous
           </Button>
           <Button
@@ -88,7 +93,8 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
             disabled={pageNumber >= numPages}
             onClick={() => {
               setPageNumber((prevPage) => prevPage + 1);
-            }}>
+            }}
+          >
             Next
           </Button>
           <Button variant="contained" onClick={() => download()}>

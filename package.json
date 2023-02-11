@@ -6,8 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "prettier --write .",
+    "format": "npx prettier ./src/**/*.{ts,tsx} --check",
+    "format:fix": "npm run format -- --write",
+    "format:lint:fix": "npm run format:fix && npm run lint:fix"
   },
+  "precommit": [
+    "format:fix"
+  ],
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -17,15 +24,23 @@
     "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "yup": "^0.32.11",
-    "react-pdf": "^6.2.2"
+    "react-pdf": "^6.2.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-pdf": "^6.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
     "@vitejs/plugin-react": "^3.1.0",
-    "typescript": "^4.9.3",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "lint-staged": "^13.1.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5",
     "vite": "^4.1.0",
     "vite-plugin-externals": "^0.6.2"
   }

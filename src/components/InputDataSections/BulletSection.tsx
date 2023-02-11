@@ -12,10 +12,20 @@ const BulletSection = ({ section }: { section: IBulletSection }) => {
         </Typography>
         <Grid container item direction="column" id="bulletSectionTitleField">
           <Grid item xs>
-            <TextInputField label="Bullet Point" name="sectionTitle" placeholder="e.g. Skills" size="small" />
+            <TextInputField
+              label="Bullet Point"
+              name="sectionTitle"
+              placeholder="e.g. Skills"
+              size="small"
+            />
           </Grid>
           <Grid item xs>
-            <TextInputField label="Bullet Point" name="sectionTitle" placeholder="e.g. Skills" size="small" />
+            <TextInputField
+              label="Bullet Point"
+              name="sectionTitle"
+              placeholder="e.g. Skills"
+              size="small"
+            />
           </Grid>
         </Grid>
       </Grid>

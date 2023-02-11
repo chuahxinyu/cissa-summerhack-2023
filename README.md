@@ -6,9 +6,11 @@
 # 🔨 Getting Started
 
 # ✨Feature 1
-* gif
-* description
+
+- gif
+- description
 
 # Feature 2
-* gif
-* description
+
+- gif
+- description
