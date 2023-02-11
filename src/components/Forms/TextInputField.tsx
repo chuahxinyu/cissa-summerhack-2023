@@ -23,6 +23,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholde
           margin={size === 'small' ? 'dense' : 'normal'}
           helperText={<ErrorMessage name={name} />}
           onKeyPress={(e) => onKeyPress(e)}
+          InputLabelProps={{ shrink: true }}
         />
       ) : (
         <Field
@@ -34,6 +35,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholde
           size={size ? size : ''}
           margin={size === 'small' ? 'dense' : 'normal'}
           helperText={<ErrorMessage name={name} />}
+          InputLabelProps={{ shrink: true }}
         />
       )}
     </div>
