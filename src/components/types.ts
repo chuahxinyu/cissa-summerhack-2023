@@ -14,6 +14,7 @@ export interface IAboutMeSection {
   phoneNo?: string;
   address?: string;
   jobTitle?: string;
+  profile?: string;
   links?: string[];
 }
 
