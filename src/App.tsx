@@ -5,26 +5,32 @@ import Preview from './components/Preview';
 import { IResumeData } from './components/types';
 
 function App() {
-  const [resumeData, setResumeData] = useState<IResumeData>({
+  const RESUME_DATA_INITIAL: IResumeData = {
     template: 'Template 1 Name',
     aboutMe: { name: '' },
     sections: [],
-  });
+  };
+  const [resumeData, setResumeData] = useState<IResumeData>(RESUME_DATA_INITIAL);
 
   useEffect(() => {
-    localStorage.setItem('resumeData', JSON.stringify(resumeData));
-  }, [resumeData]);
-
-  useEffect(() => {
-    let data = localStorage.getItem('resumeData');
+    const data = localStorage.getItem('resumeData');
+    console.log({ parse: data });
     if (data !== null) {
       setResumeData(JSON.parse(data));
     }
   }, []);
 
+  useEffect(() => {
+    const data = localStorage.getItem('resumeData');
+    console.log({ stringify: data });
+    if ((resumeData !== RESUME_DATA_INITIAL && data !== null) || data === null) {
+      localStorage.setItem('resumeData', JSON.stringify(resumeData));
+    }
+  }, [resumeData]);
+
   return (
     <div className="App">
-      <InputData setResumeData={setResumeData} />
+      <InputData setResumeData={setResumeData} resumeData={resumeData} />
       <ChooseTemplate setResumeData={setResumeData} />
       <Preview resumeData={resumeData} />
     </div>

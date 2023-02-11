@@ -36,11 +36,22 @@ const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
   jobTitle: Yup.string(),
 });
 
-const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<IResumeData>> }) => {
+const InputData = ({
+  setResumeData,
+  resumeData,
+}: {
+  setResumeData: Dispatch<SetStateAction<IResumeData>>;
+  resumeData: IResumeData;
+}) => {
+  const INITIAL_FORM_STATE: IResumeData = {
+    aboutMe: resumeData.aboutMe,
+    sections: resumeData.sections,
+  };
   return (
     <Container>
       <Typography variant="h2">1. Your Information</Typography>
       <Formik
+        enableReinitialize
         initialValues={INITIAL_FORM_STATE}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {

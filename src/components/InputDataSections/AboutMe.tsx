@@ -3,26 +3,6 @@ import { Grid } from '@mui/material';
 import { IAboutMeSection } from '../types';
 import TextInputField from '../Forms/TextInputField';
 
-const INITIAL_FORM_STATE: IAboutMeSection = {
-  name: '',
-  lastName: '',
-  email: '',
-  phoneNo: '',
-  address: '',
-  jobTitle: '',
-  profile: '',
-};
-
-const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
-  name: Yup.string().max(15, 'Must be 20 characters or less'),
-  lastName: Yup.string().max(20, 'Must be 20 characters or less'),
-  email: Yup.string().email('Invalid email address'),
-  phoneNo: Yup.number().typeError('Must be a number'),
-  address: Yup.string(),
-  jobTitle: Yup.string(),
-  profile: Yup.string(),
-});
-
 const AboutMe = () => {
   return (
     <Grid container item spacing={0} id="aboutMe">

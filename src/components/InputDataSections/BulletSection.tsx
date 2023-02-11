@@ -1,5 +1,5 @@
 import { IBulletPoint, IBulletSection } from '../types';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { FieldArray } from 'formik';
 
@@ -18,7 +18,7 @@ const BulletSection = ({ section, index }: { section: IBulletSection; index: num
           placeholder="eg. Skills, Achievements, Publications, Projects"
         />
         <FieldArray name={`sections.${index}.bullets`}>
-          {({ insert, remove, push }) => (
+          {({ remove, push }) => (
             <Grid container item direction="column" id="bulletSectionTitleField">
               {section.bullets.map((bullet, bulletIndex) => (
                 <TextInputField

@@ -3,14 +3,6 @@ import { Grid, Typography } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { IDetailedSubsection, IBulletPoint } from '../types';
 
-const INITIAL_FORM_STATE: IDetailedSubsection = {
-  title: '',
-  subtitle: '',
-  date: '',
-  location: '',
-  bullets: [] as Array<IBulletPoint>,
-};
-
 interface DetailedSubsectionProps {
   titlesName: string;
   subtitlesName?: string;
