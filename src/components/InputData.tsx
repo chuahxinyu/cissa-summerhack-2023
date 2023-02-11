@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Button, Container, Grid, Typography } from '@material-ui/core/';
 import AboutMe from './InputDataSections/AboutMe';
 import { IAboutMeSection, IResumeData } from './types';
+import DetailedSection from './InputDataSections/DetailedSection';
 
 const INITIAL_FORM_STATE: IAboutMeSection = {
   name: '',
@@ -40,10 +41,14 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
         validationSchema={ERROR_MESSAGE_SCHEMA}>
         {({ dirty, isValid }) => (
         <Form>
-          <AboutMe />
-          <Button disabled={!dirty || !isValid} type="submit" variant="contained">
-            Submit
-          </Button>
+          <Grid container spacing={6}>
+            <AboutMe />
+            <DetailedSection name="Education" titlesName="Educational Institution" hasDate={true} hasLocation ={true} />
+            <DetailedSection name="Experience" titlesName="Company/Institution" subtitlesName="Role" hasDate={true} hasLocation ={true} />
+            <Button disabled={!dirty || !isValid} type="submit" variant="contained">
+              Submit
+            </Button>
+          </Grid>
         </Form>
         )}
       </Formik>
