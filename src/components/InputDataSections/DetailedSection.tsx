@@ -1,23 +1,20 @@
 import { Grid, Typography } from '@mui/material';
-import { string } from 'yup/lib/locale';
-import { IDetailedSection, IDetailedSubsection} from '../types';
 import DetailedSubsection from './DetailedSubsection';
 
-
 interface DetailedSectionProps {
-    name: string;
-    titlesName: string;
-    subtitlesName?: string;
-    hasDate?: boolean;
-    hasLocation?: boolean;
+  name: string;
+  titlesName: string;
+  subtitlesName?: string;
+  hasDate?: boolean;
+  hasLocation?: boolean;
 }
 
 const defaultProps: DetailedSectionProps = {
-    name: "Section name",
-    titlesName: "Section titles name",
-    hasDate: false,
-    hasLocation: false,
-  };
+  name: "Section name",
+  titlesName: "Section titles name",
+  hasDate: false,
+  hasLocation: false,
+};
 
 const DetailedSection: React.FC<DetailedSectionProps> = ({name, titlesName, subtitlesName, hasDate, hasLocation}) => {
   return (
@@ -29,6 +26,5 @@ const DetailedSection: React.FC<DetailedSectionProps> = ({name, titlesName, subt
     </Grid>
   );
 };
-// TODO: find out how to define the class having an array of DetailedSubsections
 
 export default DetailedSection;

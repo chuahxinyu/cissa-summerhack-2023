@@ -7,21 +7,35 @@ interface TextInputFieldProps {
   label: string;
   placeholder?: string;
   size?: string;
+  onKeyPress?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
-const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholder, size }) => {
+const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholder, size, onKeyPress }) => {
   return (
     <div className="TextInputField">
-      <Field
-        fullWidth
-        as={TextField}
-        label={label}
-        name={name}
-        placeholder={placeholder}
-        size={size ? size : ''}
-        margin={size === 'small' ? 'dense' : ''}
-        helperText={<ErrorMessage name={name} />}
-      />
+      {onKeyPress !== undefined ? (
+        <TextField
+          fullWidth
+          label={label}
+          name={name}
+          placeholder={placeholder}
+          size={size === 'small' ? size : 'medium'}
+          margin={size === 'small' ? 'dense' : 'normal'}
+          helperText={<ErrorMessage name={name} />}
+          onKeyPress={(e) => onKeyPress(e)}
+        />
+      ) : (
+        <Field
+          fullWidth
+          as={TextField}
+          label={label}
+          name={name}
+          placeholder={placeholder}
+          size={size ? size : ''}
+          margin={size === 'small' ? 'dense' : 'normal'}
+          helperText={<ErrorMessage name={name} />}
+        />
+      )}
     </div>
   );
 };

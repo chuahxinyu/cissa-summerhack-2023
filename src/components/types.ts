@@ -34,17 +34,17 @@ export interface IDetailedSubsection {
   subtitle?: string;
   date?: string;
   location?: string;
-  bullets: BulletPoint[];
+  bullets: IBulletPoint[];
 }
 
 /* BULLET SECTION AND POINT */
 export interface IBulletSection {
   sectionType: 'bullet';
   sectionTitle: string;
-  bullets: BulletPoint[];
+  bullets: IBulletPoint[];
 }
 
-export interface BulletPoint {
+export interface IBulletPoint {
   text: string;
-  subBullets: BulletPoint;
+  subBullets: IBulletPoint[];
 }

@@ -1,6 +1,6 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import jsPDF from 'jspdf';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -35,7 +35,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
 
     // Create Document Blob usng HTML and jsPdf
     doc.html(htmlStringTemp, {
-      callback: function (doc) {
+      callback: function (doc: { output: (arg0: string) => BlobPart; }) {
         let blobPDF = new Blob([doc.output('blob')], {
           type: 'application/pdf',
         });

@@ -16,15 +16,15 @@ const INITIAL_ABOUT_ME: IAboutMeSection = {
   jobTitle: '',
 };
 
-const INITIAL_BULLET: IBulletSection = {
+const INITIAL_BULLET_SECTION: IBulletSection = {
   sectionType: 'bullet',
   sectionTitle: 'Bullet Section Title',
-  bullets: [],
+  bullets: [{ text: '', subBullets: [] }],
 };
 
 const INITIAL_FORM_STATE: IResumeData = {
   aboutMe: INITIAL_ABOUT_ME,
-  sections: [INITIAL_BULLET],
+  sections: [INITIAL_BULLET_SECTION],
 };
 
 const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
@@ -57,19 +57,20 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
               {({ insert, remove, push }) => (
                 <Grid>
                   {values.sections.length > 0 &&
-                    values.sections.map((section, index) =>
+                    values.sections.map((section, i) =>
                       section.sectionType === 'bullet' ? (
-                        <BulletSection section={section} />
+                        <BulletSection section={section} index={i} key={i} />
                       ) : (
                         <DetailedSection
                           name="Education"
                           titlesName="Educational Institution"
                           hasDate={true}
                           hasLocation={true}
+                          key={i}
                         />
                       ),
                     )}
-                  <button type="button" className="secondary" onClick={() => push(INITIAL_BULLET)}>
+                  <button type="button" className="secondary" onClick={() => push(INITIAL_BULLET_SECTION)}>
                     Add Bullet Section
                   </button>
                 </Grid>
