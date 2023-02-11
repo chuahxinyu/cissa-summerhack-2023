@@ -23,11 +23,17 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   }, [resumeData]);
 
   const reloadPreview = async () => {
+    // Get Template and Remove Spaces from resumeData
     const template = resumeData.template;
-    let htmlStringTemp = testTemplate(removeSpaces(resumeData));
+    const resumeDataCopy: IResumeData = removeSpaces(JSON.parse(JSON.stringify(resumeData)));
+
+    // Generate HTML String based on Template
+    let htmlStringTemp = testTemplate(resumeDataCopy);
     if (template === 'Template 1 Name') {
-      htmlStringTemp = template1(resumeData);
+      htmlStringTemp = template1(resumeDataCopy);
     }
+
+    // Create Document Blob usng HTML and jsPdf
     doc.html(htmlStringTemp, {
       callback: function (doc) {
         let blobPDF = new Blob([doc.output('blob')], {
