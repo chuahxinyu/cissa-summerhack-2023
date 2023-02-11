@@ -23,7 +23,7 @@ const BulletSection = ({ section, index }: { section: IBulletSection; index: num
               {section.bullets.map((bullet, bulletIndex) => (
                 <TextInputField
                   key={bulletIndex}
-                  label="Bullet Point"
+                  label=""
                   name={`sections.${index}.bullets.${bulletIndex}.text`}
                   placeholder="e.g. Coding Languages: TypeScript, C++, Java, Python"
                   size="small"
