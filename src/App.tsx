@@ -10,16 +10,11 @@ function App() {
     aboutMe: { name: '' },
     sections: [],
   });
-  const [count, setCount] = useState<number>(1);
 
   return (
     <div className="App">
-      <p>resumeData: {JSON.stringify(resumeData, null, 2)}</p>
-      <hr></hr>
       <InputData setResumeData={setResumeData} />
-      <hr></hr>
-      <ChooseTemplate />
-      <hr></hr>
+      <ChooseTemplate setResumeData={setResumeData} />
       <Preview resumeData={resumeData} />
     </div>
   );

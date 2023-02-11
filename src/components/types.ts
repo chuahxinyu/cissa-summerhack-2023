@@ -1,12 +1,16 @@
-export type TemplateOptions = 'Template 1 Name' | 'Template 2 Name' | 'Template 3 Name';
+export type TemplateOptions = 'Template 1 Name' | 'Template 2 Name' | 'Template 3 Name' | 'Template 4 Name';
 
 export interface IResumeData {
-  template: TemplateOptions;
+  template?: TemplateOptions;
   aboutMe: IAboutMeSection;
-  sections: (IDetailedSubsection | IDetailedSection)[]
+  sections: (IBulletSection | IDetailedSection)[];
 }
 
 /* ABOUT ME SECTION */
+export interface ILink {
+  label: string;
+  url: string;
+}
 export interface IAboutMeSection {
   name: string;
   lastName?: string;
@@ -14,13 +18,15 @@ export interface IAboutMeSection {
   phoneNo?: string;
   address?: string;
   jobTitle?: string;
-  links?: string[];
+  profile?: string;
+  links?: ILink[];
 }
 
 /* DETAILED SECTION AND SUBSECTION */
 export interface IDetailedSection {
+  sectionType: 'detailed';
   sectionTitle: string;
-  subSections: IDetailedSubsection[]
+  subSections: IDetailedSubsection[];
 }
 
 export interface IDetailedSubsection {
@@ -28,13 +34,14 @@ export interface IDetailedSubsection {
   subtitle?: string;
   date?: string;
   location?: string;
-  bullets: BulletPoint[]; 
+  bullets: BulletPoint[];
 }
 
 /* BULLET SECTION AND POINT */
 export interface IBulletSection {
+  sectionType: 'bullet';
   sectionTitle: string;
-  bullets: BulletPoint[]; // TODO ^ similar to ISubSection Bullets
+  bullets: BulletPoint[];
 }
 
 export interface BulletPoint {

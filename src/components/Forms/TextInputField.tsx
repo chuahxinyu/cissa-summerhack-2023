@@ -1,23 +1,29 @@
-import React from "react";
-import { TextField }from '@material-ui/core/';
+import React from 'react';
+import { TextField } from '@mui/material';
 import { ErrorMessage, Field } from 'formik';
 
 interface TextInputFieldProps {
-    name: string;
-    label: string;
-    placeholder: string;
+  name: string;
+  label: string;
+  placeholder?: string;
+  size?: string;
 }
 
-const TextInputField: React.FC<TextInputFieldProps> = ({name, label, placeholder}) => {
-    return <div className="TextInputField">
-        <Field 
+const TextInputField: React.FC<TextInputFieldProps> = ({ name, label, placeholder, size }) => {
+  return (
+    <div className="TextInputField">
+      <Field
         fullWidth
-        as={TextField} 
+        as={TextField}
         label={label}
         name={name}
         placeholder={placeholder}
-        helperText={<ErrorMessage name={name} />}/>
+        size={size ? size : ''}
+        margin={size === 'small' ? 'dense' : ''}
+        helperText={<ErrorMessage name={name} />}
+      />
     </div>
+  );
 };
 
 export default TextInputField;
