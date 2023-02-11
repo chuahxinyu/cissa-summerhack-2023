@@ -16,6 +16,18 @@ export const template1 = (resumeData: IResumeData) => {
                 </ul>
             </header>`;
     },
+    get detailedSectionString() {
+      // param: {section}
+      return ``;
+    },
+    get bulletSectionString() {
+      return ``;
+    },
+    get allSections() {
+      // call detailed and bullet, map `section`
+      const res = sections.map((section) => ``);
+      return res;
+    },
   };
   const res = `
 <body>
