@@ -5,6 +5,7 @@ import { Button, Container, Grid, Typography } from '@material-ui/core/';
 import AboutMe from './InputDataSections/AboutMe';
 import { IAboutMeSection, IBulletSection, IResumeData } from './types';
 import BulletSection from './InputDataSections/BulletSection';
+import DetailedSection from './InputDataSections/DetailedSection';
 
 const INITIAL_ABOUT_ME: IAboutMeSection = {
   name: '',
@@ -57,7 +58,7 @@ const InputData = ({ setResumeData }: { setResumeData: Dispatch<SetStateAction<I
                 <Grid>
                   {values.sections.length > 0 &&
                     values.sections.map((section, index) =>
-                      section.sectionType === 'bullet' ? <BulletSection section={section} /> : null,
+                      section.sectionType === 'bullet' ? <BulletSection section={section} /> : <DetailedSection name="Education" titlesName="Educational Institution" hasDate={true} hasLocation ={true} />
                     )}
                   <button type="button" className="secondary" onClick={() => push(INITIAL_BULLET)}>
                     Add Bullet Section
