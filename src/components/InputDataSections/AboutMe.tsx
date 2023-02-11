@@ -15,22 +15,22 @@ const INITIAL_FORM_STATE: IAboutMeSection = {
 };
 
 const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
-    name: Yup.string().max(15, 'Must be 20 characters or less'),
-    lastName: Yup.string().max(20, 'Must be 20 characters or less'),
-    email: Yup.string().email('Invalid email address'),
-    phoneNo: Yup.number().typeError('Must be a number'),
-    address: Yup.string(),
-    jobTitle: Yup.string(),
-  });
+  name: Yup.string().max(15, 'Must be 20 characters or less'),
+  lastName: Yup.string().max(20, 'Must be 20 characters or less'),
+  email: Yup.string().email('Invalid email address'),
+  phoneNo: Yup.number().typeError('Must be a number'),
+  address: Yup.string(),
+  jobTitle: Yup.string(),
+});
 
 const AboutMe = () => {
   return (
-    <Grid container spacing={4}>
-      <Grid container item spacing={3} id="aboutMe">
+    <Grid container spacing={4} paddingLeft={4}>
+      <Grid container item spacing={2} id="aboutMe">
+        <Typography variant="h4" paddingTop={5}>
+          About You
+        </Typography>
         <Grid container item spacing={2} id="name">
-          <Grid item xs={12}>
-            <Typography>Name</Typography>
-          </Grid>
           <Grid item xs>
             <TextInputField label="First Name" name="name" placeholder="e.g. Mai" />
           </Grid>
@@ -39,9 +39,6 @@ const AboutMe = () => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} id="contactDetails">
-          <Grid item xs={12}>
-            <Typography>Contact details</Typography>
-          </Grid>
           <Grid item xs>
             <TextInputField label="Email" name="email" placeholder="e.g. maiphs@potato.com" />
           </Grid>
