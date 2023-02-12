@@ -1,14 +1,17 @@
-import jsPDF from "jspdf";
-import { IResumeData } from "../components/types";
-import { IGenerateTemplateProps } from "./types";
+import jsPDF from 'jspdf';
+import { IResumeData } from '../components/types';
+import { IGenerateTemplateProps } from './types';
 
-export const generateTemplate2 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplateProps) => {
+export const generateTemplate2 = ({
+  resumeDataCopy,
+  setBlobUrl,
+}: IGenerateTemplateProps) => {
   const doc = new jsPDF('p', 'pt', 'a4');
-  let margin = 36; // narrow margin - 12.7 mm
-  const htmlStringTemp = template2(resumeDataCopy)
+  const margin = 36; // narrow margin - 12.7 mm
+  const htmlStringTemp = template2(resumeDataCopy);
   doc.html(htmlStringTemp, {
     callback: async function (doc: { output: (arg0: string) => BlobPart }) {
-      let blobPDF = new Blob([doc.output('blob')], {
+      const blobPDF = new Blob([doc.output('blob')], {
         type: 'application/pdf',
       });
       const blobUrl = URL.createObjectURL(blobPDF);
@@ -18,12 +21,9 @@ export const generateTemplate2 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplat
     y: margin,
   });
   return doc;
-}
+};
 
 export const template2 = (resumeData: IResumeData) => {
-
-  
-
   const style = ` <style>
     * {
   margin: 0;
@@ -182,8 +182,8 @@ body {
     }
   }
 }
-    </style>`
-    const res = `
+    </style>`;
+  const res = `
     <body>
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
    ${style}
@@ -341,6 +341,6 @@ body {
      </div>
      </div>
   </div>
-</div></body>`
-return res
-}
+</div></body>`;
+  return res;
+};

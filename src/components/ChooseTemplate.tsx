@@ -48,7 +48,7 @@ const ChooseTemplate = ({
     },
   ];
   return (
-    <Grid container sx={{px: 7, py: 5}}>
+    <Grid container sx={{ px: 7, py: 5 }}>
       <Container style={{ width: '100%', overflow: 'auto', display: 'flex' }}>
         {templates.map((template, i) => (
           <Container key={i}>

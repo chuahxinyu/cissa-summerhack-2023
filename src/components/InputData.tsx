@@ -31,14 +31,18 @@ const InputData = ({
     sections: resumeData.sections,
   };
   return (
-    <Grid container sx={{px: 7, py: 5}}>
+    <Grid container sx={{ px: 7, py: 5 }}>
       <Formik
         enableReinitialize
         initialValues={INITIAL_FORM_STATE}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             console.log(values);
-            setResumeData((prevState) => ({ ...prevState, aboutMe: values.aboutMe, sections: values.sections }));
+            setResumeData((prevState) => ({
+              ...prevState,
+              aboutMe: values.aboutMe,
+              sections: values.sections,
+            }));
             setSubmitting(false);
           }, 400);
         }}
@@ -66,7 +70,9 @@ const InputData = ({
                                 removeFunction={() => remove(sectionIndex)}
                                 isExpanded={section.isExpanded}
                                 isUpDisabled={sectionIndex === 0}
-                                isDownDisabled={sectionIndex === values.sections.length - 1}
+                                isDownDisabled={
+                                  sectionIndex === values.sections.length - 1
+                                }
                                 moveUpFunction={() => {
                                   remove(sectionIndex);
                                   insert(sectionIndex - 1, section);
@@ -84,7 +90,9 @@ const InputData = ({
                                 removeFunction={() => remove(sectionIndex)}
                                 isExpanded={section.isExpanded}
                                 isUpDisabled={sectionIndex === 0}
-                                isDownDisabled={sectionIndex === values.sections.length - 1}
+                                isDownDisabled={
+                                  sectionIndex === values.sections.length - 1
+                                }
                                 moveUpFunction={() => {
                                   remove(sectionIndex);
                                   insert(sectionIndex - 1, section);
@@ -96,13 +104,14 @@ const InputData = ({
                               />
                             ),
                           )}
-                        </Grid>
-                      <Grid container item style={{textAlign: "center"}}>
+                      </Grid>
+                      <Grid container item style={{ textAlign: 'center' }}>
                         <Grid item xs={6}>
                           <Button
                             variant="outlined"
                             onClick={() => push(INITIAL_BULLET_SECTION)}
-                            startIcon={<AddCircleOutlineIcon />}>
+                            startIcon={<AddCircleOutlineIcon />}
+                          >
                             Add Bullet Section
                           </Button>
                         </Grid>
@@ -110,7 +119,8 @@ const InputData = ({
                           <Button
                             variant="outlined"
                             onClick={() => push(INITIAL_DETAILED_SECTION)}
-                            startIcon={<AddCircleOutlineIcon />}>
+                            startIcon={<AddCircleOutlineIcon />}
+                          >
                             Add Detailed Section
                           </Button>
                         </Grid>
@@ -120,9 +130,14 @@ const InputData = ({
                 </FieldArray>
               </Grid>
 
-              <Grid item xs={12} style={{textAlign: "center"}}>
-                <Button disabled={!isValid} type="submit" variant="contained" startIcon={<ReplayIcon />}>
-                Reload
+              <Grid item xs={12} style={{ textAlign: 'center' }}>
+                <Button
+                  disabled={!isValid}
+                  type="submit"
+                  variant="contained"
+                  startIcon={<ReplayIcon />}
+                >
+                  Reload
                 </Button>
               </Grid>
             </Grid>

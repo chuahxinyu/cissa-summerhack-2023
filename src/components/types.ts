@@ -57,3 +57,5 @@ export interface IBulletPoint {
   text: string;
   subBullets: IBulletPoint[];
 }
+
+export type StringOptional = string | undefined;

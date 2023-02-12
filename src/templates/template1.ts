@@ -1,6 +1,7 @@
 import { IResumeData } from '../components/types';
 import jsPDF from 'jspdf';
 import { IGenerateTemplateProps } from './types';
+import { addLineBreaks } from '../utils/removeSpaces';
 
 type StringOptional = string | undefined;
 
@@ -9,8 +10,8 @@ export const generateTemplate1 = ({
   setBlobUrl,
 }: IGenerateTemplateProps): jsPDF => {
   const doc = new jsPDF('p', 'pt', 'a4');
-  let margin = 36; // narrow margin - 12.7 mm
-  const htmlStringTemp = template1(resumeDataCopy)
+  const margin = 36; // narrow margin - 12.7 mm
+  const htmlStringTemp = template1(doc, resumeDataCopy);
   doc.html(htmlStringTemp, {
     callback: async function (doc: { output: (arg0: string) => BlobPart }) {
       const blobPDF = new Blob([doc.output('blob')], {
@@ -19,13 +20,14 @@ export const generateTemplate1 = ({
       const blobUrl = URL.createObjectURL(blobPDF);
       setBlobUrl(blobUrl);
     },
-    margin: [margin, margin, margin, margin],
-    autoPaging: 'text',
+    x: margin,
+    y: margin,
   });
   return doc;
 };
 
-export const template1 = (resumeData: IResumeData) => {
+export const template1 = (doc: jsPDF, resumeData: IResumeData) => {
+  resumeData = addLineBreaks(doc, resumeData);
   const { aboutMe, sections } = resumeData;
 
   const arrayToBullets = (arr: Array<StringOptional>): string => {
@@ -43,10 +45,10 @@ export const template1 = (resumeData: IResumeData) => {
                   ${arrayToBullets(infoList)} 
                 </ul>
                 <ul>
-                    ${aboutMe.links?aboutMe.links.map(
+                    ${aboutMe.links?.map(
                       (link) =>
                         `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`,
-                    ).reduce((result: string, item: string): string => result + item, ''):''}
+                    )}
                 </ul>
             </header>`;
     },
@@ -62,43 +64,36 @@ export const template1 = (resumeData: IResumeData) => {
             <h5>${subSection.location}</h5>
             <h5>${subSection.startDate}&nbsp;-&nbsp;${subSection.endDate}</h5>
             <ul>
-              ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`).join('')}
+              ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
             </ul>
        	</li>
           `,
           );
           return `<section><h3>${section.sectionTitle}</h3>
 		<ul>
-      ${subSections.join('')}
+      ${subSections.join('\n')}
 		</ul>
 	</section>`;
         } else
           return `<section><h3>${section.sectionTitle}</h3>
 		<ul>
-			${section.bullets.map((bullet) => `<li>${bullet.text}</li>`).join('')}
+			${section.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
 		</ul>
 	</section>`;
-      }).join('');
-      return allSections;
+      });
+      console.log({ allSections: allSections });
+      return allSections.join('\n');
     },
   };
 
   const styles = `<style>
-body {
+html {
     background: white;
     color: black;
     font: 18px 'Helvetica Neue', Arial, sans-serif;
 }
 ul {
   padding-inline-start: 1rem;
-}
-h4 {
-  margin-bottom: 0.5rem;
-}
-h5 {
-  padding: 0rem;
-  margin-top: 0rem;
-  margin-bottom: 0.5rem;
 }
 li {
   list-style-type: disc;
