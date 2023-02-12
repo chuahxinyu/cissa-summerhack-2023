@@ -9,6 +9,7 @@ import { testTemplate } from '../templates/testTemplate';
 import { generateTemplate1, template1 } from '../templates/template1';
 import { removeSpaces } from '../utils/removeSpaces';
 import jsPDF from 'jspdf';
+import { generateTemplate2 } from '../templates/template2';
 
 const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   const [numPages, setNumPages] = useState<number>(1);
@@ -30,6 +31,8 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     );
     if (template === 'Template 1 Name') {
       return generateTemplate1({resumeDataCopy: resumeDataCopy, setBlobUrl: setBlobUrl})
+    } else if (template === 'Template 2 Name') {
+      return generateTemplate2({resumeDataCopy: resumeDataCopy, setBlobUrl: setBlobUrl})
     } else {
       const doc = new jsPDF();
       doc.text(['string1', 'string2', 'string3'], 10, 10);

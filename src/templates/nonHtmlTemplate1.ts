@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf";
 import { IGenerateTemplateProps } from "./types";
 
-export const generateTemplate2 = ({resumeDataCopy, setBlobUrl} : IGenerateTemplateProps) => {
+export const generateNonHtml = ({resumeDataCopy, setBlobUrl} : IGenerateTemplateProps) => {
     const doc = new jsPDF();
     const LEFT_MARGIN = 50;
     const TOP_MARGIN = 50;

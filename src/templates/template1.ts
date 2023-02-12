@@ -1,6 +1,5 @@
 import { IResumeData } from '../components/types';
 import jsPDF from 'jspdf';
-import { Dispatch, SetStateAction } from 'react';
 import { IGenerateTemplateProps } from './types';
 
 
