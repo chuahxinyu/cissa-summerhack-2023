@@ -46,42 +46,38 @@ const InputData = ({
         validationSchema={ERROR_MESSAGE_SCHEMA}>
         {({ dirty, isValid, values }) => (
           <Form>
-            <AboutMe />
-            <FieldArray name="sections">
-              {({ insert, remove, push }) => (
-                <Grid>
-                  {values.sections.length > 0 &&
-                    values.sections.map((section, i) =>
-                      section.sectionType === 'bullet' ? (
-                        <BulletSection section={section} index={i} key={i} />
-                      ) : (
-                        <DetailedSection
-                          name="Education"
-                          titlesName="Educational Institution"
-                          hasDate={true}
-                          hasLocation={true}
-                          key={i}
-                        />
-                      ),
-                    )}
-                  <Button
-                    variant="outlined"
-                    onClick={() => push(INITIAL_BULLET_SECTION)}
-                    startIcon={<AddCircleOutlineIcon />}>
-                    Add Bullet Section
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    onClick={() => push(INITIAL_DETAILED_SECTION)}
-                    startIcon={<AddCircleOutlineIcon />}>
-                    Add Detailed Section
-                  </Button>
-                </Grid>
-              )}
-            </FieldArray>
-            <Button disabled={!isValid} type="submit" variant="contained" startIcon={<ReplayIcon />}>
-              Reload
-            </Button>
+            <Grid spacing={2}>
+              <AboutMe />
+              <FieldArray name="sections">
+                {({ insert, remove, push }) => (
+                  <Grid spacing={2}>
+                    {values.sections.length > 0 &&
+                      values.sections.map((section, i) =>
+                        section.sectionType === 'bullet' ? (
+                          <BulletSection key={i} section={section} index={i} removeFunction={() => remove(i)} />
+                        ) : (
+                          <DetailedSection section={section} index={i} key={i} removeFunction={() => remove(i)} />
+                        ),
+                      )}
+                    <Button
+                      variant="outlined"
+                      onClick={() => push(INITIAL_BULLET_SECTION)}
+                      startIcon={<AddCircleOutlineIcon />}>
+                      Add Bullet Section
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      onClick={() => push(INITIAL_DETAILED_SECTION)}
+                      startIcon={<AddCircleOutlineIcon />}>
+                      Add Detailed Section
+                    </Button>
+                  </Grid>
+                )}
+              </FieldArray>
+              <Button disabled={!isValid} type="submit" variant="contained" startIcon={<ReplayIcon />}>
+                Reload
+              </Button>
+            </Grid>
           </Form>
         )}
       </Formik>

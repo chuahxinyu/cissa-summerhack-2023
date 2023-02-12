@@ -1,29 +1,49 @@
-import { Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
+import TextInputField from '../Forms/TextInputField';
+import { IDetailedSection } from '../types';
 import DetailedSubsection from './DetailedSubsection';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { FieldArray } from 'formik';
 
 interface DetailedSectionProps {
-  name: string;
-  titlesName: string;
-  subtitlesName?: string;
-  hasDate?: boolean;
-  hasLocation?: boolean;
+  section: IDetailedSection;
+  index: number;
+  removeFunction: () => void;
 }
 
-const defaultProps: DetailedSectionProps = {
-  name: "Section name",
-  titlesName: "Section titles name",
-  hasDate: false,
-  hasLocation: false,
-};
-
-const DetailedSection: React.FC<DetailedSectionProps> = ({name, titlesName, subtitlesName, hasDate, hasLocation}) => {
+const DetailedSection: React.FC<DetailedSectionProps> = ({ section, index, removeFunction }) => {
   return (
-    <Grid container item spacing={3}>
-        <Grid item xs={12}>
-          <Typography variant="h3">{name}</Typography>
-        </Grid>
-        <DetailedSubsection titlesName={titlesName} subtitlesName={subtitlesName} hasDate={hasDate} hasLocation={hasLocation}/>
-    </Grid>
+    <Card variant="outlined">
+      <CardContent>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ width: '100%' }}>
+            <TextInputField
+              label="Section Name"
+              name={`sections.${index}.sectionName`}
+              placeholder="eg. Skills, Achievements, Publications, Projects"
+            />
+          </Box>
+          <IconButton aria-label="delete" color="error" onClick={removeFunction}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+        <FieldArray name={`sections.${index}.subsections`}>
+          {({ remove, push }) => (
+            <Grid container item direction="column" id="bulletSectionTitleField">
+              {section.subSections.length > 0 &&
+                section.subSections.map((subsection, subsectionIndex) => (
+                  <DetailedSubsection
+                    key={subsectionIndex}
+                    subsection={subsection}
+                    namePrefix={`sections.${index}.subSections`}
+                    index={subsectionIndex}
+                  />
+                ))}
+            </Grid>
+          )}
+        </FieldArray>
+      </CardContent>
+    </Card>
   );
 };
 

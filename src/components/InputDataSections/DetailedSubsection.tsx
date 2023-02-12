@@ -3,50 +3,29 @@ import { Grid, Typography } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { IDetailedSubsection, IBulletPoint } from '../types';
 
-interface DetailedSubsectionProps {
-  titlesName: string;
-  subtitlesName?: string;
-  hasDate?: boolean;
-  hasLocation?: boolean;
-}
-
-const defaultProps: DetailedSubsectionProps = {
-  titlesName: 'title',
-  hasDate: false,
-  hasLocation: false,
-};
-
-const DetailedSubsection: React.FC<DetailedSubsectionProps> = ({ titlesName, subtitlesName, hasDate, hasLocation }) => {
+const DetailedSubsection = ({
+  subsection,
+  namePrefix,
+  index,
+}: {
+  subsection: IDetailedSubsection;
+  namePrefix: string;
+  index: number;
+}) => {
+  console.log({ subsection: subsection });
   return (
-    <Grid container item spacing={2}>
-      <Grid item xs={12}>
-        <TextInputField label={titlesName} name="title" />
-      </Grid>
-
-      {subtitlesName !== undefined && (
-        <Grid item xs={6}>
-          <TextInputField label={subtitlesName} name="subtitle" />
-        </Grid>
-      )}
-
-      {hasDate && (
-        <Grid item xs>
-          <TextInputField label="Date" name="date" placeholder="e.g. June 2020 - December 2020" />
-        </Grid>
-      )}
-
-      {hasLocation && (
-        <Grid item xs>
-          <TextInputField label="Location" name="location" />
-        </Grid>
-      )}
-
-      <Grid item xs={12}>
-        <TextInputField label="Description" name="description" />
-      </Grid>
+    <Grid spacing={2}>
+      <TextInputField
+        label="Subsection Title"
+        name={`${namePrefix}.${index}.title`}
+        inputProps={{ style: { fontSize: 40 } }}
+      />
+      <TextInputField label="Subsection Subtitle" name={`${namePrefix}.${index}.subtitle`} />
+      <TextInputField label="Date" name={`${namePrefix}.${index}.date`} placeholder="e.g. June 2020 - December 2020" />
+      <TextInputField label="Location" name={`${namePrefix}.${index}.location`} />
+      {/* TODO Bullets */}
     </Grid>
   );
 };
-// TODO: find out how to replace one description box to BulletSections
 
 export default DetailedSubsection;

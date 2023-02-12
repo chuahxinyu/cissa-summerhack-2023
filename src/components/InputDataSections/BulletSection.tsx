@@ -1,22 +1,36 @@
 import { IBulletPoint, IBulletSection } from '../types';
-import { Grid } from '@mui/material';
+import { Box, Card, CardContent, Grid, IconButton } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { FieldArray } from 'formik';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const INITIAL_BULLET: IBulletPoint = {
   text: '',
   subBullets: [],
 };
 
-const BulletSection = ({ section, index }: { section: IBulletSection; index: number }) => {
+interface BulletSectionProps {
+  section: IBulletSection;
+  index: number;
+  removeFunction: () => void;
+}
+
+const BulletSection: React.FC<BulletSectionProps> = ({ section, index, removeFunction }) => {
   return (
-    <Grid container spacing={4}>
-      <Grid container item spacing={2} id="bulletSection">
-        <TextInputField
-          label="Section Name"
-          name={`sections.${index}.sectionName`}
-          placeholder="eg. Skills, Achievements, Publications, Projects"
-        />
+    <Card variant="outlined">
+      <CardContent>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ width: '100%' }}>
+            <TextInputField
+              label="Section Name"
+              name={`sections.${index}.sectionName`}
+              placeholder="eg. Skills, Achievements, Publications, Projects"
+            />
+          </Box>
+          <IconButton aria-label="delete" color="error" onClick={removeFunction}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
         <FieldArray name={`sections.${index}.bullets`}>
           {({ remove, push }) => (
             <Grid container item direction="column" id="bulletSectionTitleField">
@@ -41,8 +55,8 @@ const BulletSection = ({ section, index }: { section: IBulletSection; index: num
             </Grid>
           )}
         </FieldArray>
-      </Grid>
-    </Grid>
+      </CardContent>
+    </Card>
   );
 };
 

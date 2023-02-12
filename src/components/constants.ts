@@ -25,6 +25,9 @@ export const INITIAL_BULLET_SECTION: IBulletSection = {
 
 export const INITIAL_DETAILED_SUBSECTION: IDetailedSubsection = {
   title: 'Detailed Subsection',
+  subtitle: '',
+  date: '',
+  location: '',
   bullets: [INITIAL_BULLET],
 };
 export const INITIAL_DETAILED_SECTION: IDetailedSection = {
