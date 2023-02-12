@@ -1,12 +1,14 @@
 {
   "name": "cissa-summerhack-2023",
-  "homepage": "https://chuahxinyu.github.io/resume-generator",
+  "homepage": "https://chuahxinyu.github.io/cissa-summerhack-2023",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "preview": "vite preview",
     "lint": "npx eslint ./src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
@@ -48,6 +50,7 @@
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "gh-pages": "^5.0.0",
     "lint-staged": "^13.1.1",
     "pre-commit": "^1.2.2",
     "prettier": "^2.8.4",
