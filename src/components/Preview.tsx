@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import jsPDF from 'jspdf';
 import { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
@@ -10,7 +10,7 @@ import { template1 } from '../templates/template1';
 import { removeSpaces } from '../utils/removeSpaces';
 
 const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
-  var doc = new jsPDF();
+  const doc = new jsPDF();
   const [numPages, setNumPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [blobUrl, setBlobUrl] = useState('');
@@ -26,7 +26,9 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   const reloadPreview = async () => {
     // Get Template and Remove Spaces from resumeData
     const template = resumeData.template;
-    const resumeDataCopy: IResumeData = removeSpaces(JSON.parse(JSON.stringify(resumeData)));
+    const resumeDataCopy: IResumeData = removeSpaces(
+      JSON.parse(JSON.stringify(resumeData)),
+    );
 
     // Generate HTML String based on Template
     let htmlStringTemp = testTemplate(resumeDataCopy);
@@ -39,7 +41,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
         let blobPDF = new Blob([doc.output('blob')], {
           type: 'application/pdf',
         });
-        let blobUrl = URL.createObjectURL(blobPDF);
+        const blobUrl = URL.createObjectURL(blobPDF);
         setBlobUrl(blobUrl);
         isBlobUrlSet = true;
       },
@@ -54,49 +56,60 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
 
   return (
     <Container>
-      <Typography variant="h2" gutterBottom>
-        3. Download your resume
-      </Typography>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        textAlign="center"
-        minHeight="100vh">
-        <Document
-          file={blobUrl}
-          onLoadSuccess={({ numPages }) => {
-            setNumPages(numPages);
-            setPageNumber(1);
-          }}>
-          <Page pageNumber={pageNumber} />
-        </Document>
-        <Typography variant="body1">
-          Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
-        </Typography>
-        <div>
-          <Button
-            type="button"
-            disabled={pageNumber <= 1}
-            onClick={() => {
-              setPageNumber((prevPage) => prevPage - 1);
-            }}>
-            Previous
-          </Button>
-          <Button
-            type="button"
-            disabled={pageNumber >= numPages}
-            onClick={() => {
-              setPageNumber((prevPage) => prevPage + 1);
-            }}>
-            Next
-          </Button>
-          <Button variant="contained" onClick={() => download()}>
-            Download
-          </Button>
-        </div>
-      </Box>
+      <Grid container spacing={3} direction="column">
+        <Grid item>
+          <Typography variant="h1">
+            3. Download your resume
+          </Typography>
+        </Grid>
+
+        <Grid container item spacing={2} direction="column" alignItems="center" justifyContent="center">
+          <Grid item>
+            <Document
+              file={blobUrl}
+              onLoadSuccess={({ numPages }) => {
+                setNumPages(numPages);
+                setPageNumber(1);
+              }}
+            >
+              <Page pageNumber={pageNumber} />
+            </Document>
+          </Grid>
+
+          <Grid item>
+            <Typography variant="body1">
+              Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
+            </Typography>
+          </Grid>
+
+          <Grid container item alignItems="center" justifyContent="center">
+            <Button
+              type="button"
+              disabled={pageNumber <= 1}
+              onClick={() => {
+                setPageNumber((prevPage) => prevPage - 1);
+              }}
+            >
+              Previous
+            </Button>
+            <Button
+              type="button"
+              disabled={pageNumber >= numPages}
+              onClick={() => {
+                setPageNumber((prevPage) => prevPage + 1);
+              }}
+            >
+              Next
+            </Button>
+          </Grid>
+
+          <Grid item>
+            <Button variant="contained" onClick={() => download()}>
+              Download
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
     </Container>
   );
 };

@@ -1,4 +1,8 @@
-export type TemplateOptions = 'Template 1 Name' | 'Template 2 Name' | 'Template 3 Name' | 'Template 4 Name';
+export type TemplateOptions =
+  | 'Template 1 Name'
+  | 'Template 2 Name'
+  | 'Template 3 Name'
+  | 'Template 4 Name';
 
 export interface IResumeData {
   template?: TemplateOptions;

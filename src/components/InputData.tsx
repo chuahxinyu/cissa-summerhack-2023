@@ -43,7 +43,8 @@ const InputData = ({
             setSubmitting(false);
           }, 400);
         }}
-        validationSchema={ERROR_MESSAGE_SCHEMA}>
+        validationSchema={ERROR_MESSAGE_SCHEMA}
+      >
         {({ dirty, isValid, values }) => (
           <Form>
             <Grid>

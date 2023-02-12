@@ -1,17 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/cissa-summerhack-2023/",
   plugins: [react()],
-  resolve: {
-    alias: {
-      // process: 'process/browser',
-      // stream: 'stream-browserify',
-      // zlib: 'browserify-zlib',
-      // util: 'util/',
-      // '@': resolve(__dirname, './src'),
-    },
-  },
 });
