@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
-import { Grid, Typography } from '@mui/material';
-import { IAboutMeSection} from '../types';
+import { Box, Card, CardContent, Checkbox, Collapse, FormControlLabel, Grid, Typography } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { Field } from 'formik';
 
@@ -18,11 +17,8 @@ const AboutMe = ({ isExpanded }: { isExpanded: boolean }) => {
           />
           <Typography variant="h5">About Me</Typography>
         </Box>
-
+      <Collapse in={isExpanded}>
       <Grid container item spacing={2} id="name">
-        <Grid item xs={12}>
-          <Typography>Name</Typography>
-        </Grid>
         <Grid item xs>
           <TextInputField label="First Name" name="name" placeholder="e.g. Mai" />
         </Grid>
@@ -63,7 +59,9 @@ const AboutMe = ({ isExpanded }: { isExpanded: boolean }) => {
           <TextInputField label="Profile" name="profile" placeholder="e.g. Second year Media and Communications looking for opportunities in..." />
         </Grid>
       </Grid>
-    </Grid>
+      </Collapse>
+      </CardContent>
+    </Card>
   );
 };
 
