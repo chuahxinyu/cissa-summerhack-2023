@@ -49,7 +49,7 @@ const ChooseTemplate = ({
   ];
   return (
     <Container>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h1">
         2. Choose a Template
       </Typography>
       <Container style={{ width: '100%', overflow: 'auto', display: 'flex' }}>

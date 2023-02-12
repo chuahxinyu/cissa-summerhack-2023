@@ -3,7 +3,8 @@ import ChooseTemplate from './components/ChooseTemplate';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
 import { IResumeData } from './components/types';
-import {Container, Card, Grid} from '@mui/material/';
+import {Container, Card, ThemeProvider} from '@mui/material/';
+import theme from './theme';
 import './App.css'
 
 function App() {
@@ -12,22 +13,25 @@ function App() {
     aboutMe: { name: '' },
     sections: [],
   });
+  // TODO card padding
 
   return (
     <div className="App">
-      <Container>
-        <Card>
-          <InputData setResumeData={setResumeData} />
-        </Card>
-        <br /><br />
-        <Card>
-          <ChooseTemplate setResumeData={setResumeData} />
-        </Card>
-        <br /><br />
-        <Card>
-          <Preview resumeData={resumeData} />
-        </Card>
-      </Container>
+      <ThemeProvider theme={theme}>
+        <Container maxWidth="md">
+          <Card>
+            <InputData setResumeData={setResumeData} />
+          </Card>
+          <br /><br />
+          <Card>
+            <ChooseTemplate setResumeData={setResumeData} />
+          </Card>
+          <br /><br />
+          <Card>
+            <Preview resumeData={resumeData} />
+          </Card>
+        </Container>
+      </ThemeProvider>
     </div>
   );
 }

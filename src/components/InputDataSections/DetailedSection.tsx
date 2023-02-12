@@ -28,7 +28,7 @@ const DetailedSection: React.FC<DetailedSectionProps> = ({
   return (
     <Grid container item spacing={3}>
       <Grid item xs={12}>
-        <Typography variant="h3">{name}</Typography>
+        <Typography variant="h2">{name}</Typography>
       </Grid>
       <DetailedSubsection
         titlesName={titlesName}

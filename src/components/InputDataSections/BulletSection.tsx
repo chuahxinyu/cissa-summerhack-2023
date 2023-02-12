@@ -7,7 +7,7 @@ const BulletSection = ({ section }: { section: IBulletSection }) => {
   return (
     <Grid container spacing={3} id="bulletSection">
       <Grid item xs={12}>
-        <Typography variant="h4">
+        <Typography variant="h2">
           {section.sectionTitle}
         </Typography>
 

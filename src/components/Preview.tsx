@@ -57,7 +57,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     <Container>
       <Grid container spacing={3} direction="column">
         <Grid item>
-          <Typography variant="h2">
+          <Typography variant="h1">
             3. Download your resume
           </Typography>
         </Grid>
@@ -107,7 +107,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
               Download
             </Button>
           </Grid>
-      </Grid>
+        </Grid>
       </Grid>
     </Container>
   );

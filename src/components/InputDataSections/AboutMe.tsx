@@ -27,7 +27,7 @@ const AboutMe = () => {
   return (
     <Grid container spacing={3} id="aboutMe">
       <Grid item xs={12}>
-        <Typography variant="h4">About Me</Typography>
+        <Typography variant="h2">About Me</Typography>
       </Grid>
 
       <Grid container item spacing={2} id="name">

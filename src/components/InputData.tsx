@@ -43,7 +43,7 @@ const InputData = ({
 }) => {
   return (
     <Container>
-      <Typography variant="h2">1. Your Information</Typography>
+      <Typography variant="h1">1. Your Information</Typography>
       <Formik
         initialValues={INITIAL_FORM_STATE}
         onSubmit={(values, { setSubmitting }) => {
@@ -85,13 +85,13 @@ const InputData = ({
                           )}
                         </Grid>
                       <Grid item>
-                        <button
+                        <Button
                           type="button"
                           className="secondary"
                           onClick={() => push(INITIAL_BULLET)}
                         >
                           Add Bullet Section
-                        </button>
+                        </Button>
                       </Grid>
                     </Grid>
                   )}
