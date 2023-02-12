@@ -28,9 +28,6 @@ const AboutMe = ({ isExpanded }: { isExpanded: boolean }) => {
       </Grid>
 
       <Grid container item spacing={2} id="contactDetails">
-        <Grid item xs={12}>
-          <Typography>Contact details</Typography>
-        </Grid>
         <Grid item xs>
           <TextInputField label="Email" name="aboutMe.email" placeholder="e.g. maiphs@potato.com" />
         </Grid>
@@ -43,18 +40,12 @@ const AboutMe = ({ isExpanded }: { isExpanded: boolean }) => {
       </Grid>
 
       <Grid container item spacing={2} id="jobTitleField">
-        <Grid item xs={12}>
-          <Typography>Job Title</Typography>
-        </Grid>
         <Grid item xs>
           <TextInputField label="Job Title" name="aboutMe.jobTitle" placeholder="e.g. Graphic Designer" />
         </Grid>
       </Grid>
 
       <Grid container item spacing={2} id="profileField">
-        <Grid item xs={12}>
-          <Typography>Profile</Typography>
-        </Grid>
         <Grid item xs>
           <TextInputField label="Profile" name="aboutMe.profile" placeholder="e.g. Second year Media and Communications looking for opportunities in..." />
         </Grid>

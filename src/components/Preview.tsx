@@ -33,15 +33,18 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
         resumeDataCopy: resumeDataCopy,
         setBlobUrl: setBlobUrl,
       });
-    } else if (template === 'Template 2 Name') {
-      return generateTemplate2({
+    } 
+    // else if (template === 'Template 2 Name') {
+    //   return generateTemplate2({
+    //     resumeDataCopy: resumeDataCopy,
+    //     setBlobUrl: setBlobUrl,
+    //   });
+    // } 
+    else {
+      return generateTemplate1({
         resumeDataCopy: resumeDataCopy,
         setBlobUrl: setBlobUrl,
       });
-    } else {
-      const doc = new jsPDF();
-      doc.text(['string1', 'string2', 'string3'], 10, 10);
-      return doc;
     }
   };
 

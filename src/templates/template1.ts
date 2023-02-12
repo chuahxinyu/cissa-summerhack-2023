@@ -44,12 +44,6 @@ export const template1 = (doc: jsPDF, resumeData: IResumeData) => {
                 <ul>
                   ${arrayToBullets(infoList)} 
                 </ul>
-                <ul>
-                    ${aboutMe.links?.map(
-                      (link) =>
-                        `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`,
-                    )}
-                </ul>
             </header>`;
     },
     get allSections() {

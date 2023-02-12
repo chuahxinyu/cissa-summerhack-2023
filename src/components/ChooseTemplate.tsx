@@ -125,6 +125,9 @@ const ChooseTemplate = ({
           </Container>
         ))}
       </Container>
+      <Typography variant="body2" color="text.secondary">
+                    *NOTE: Resume Lab is still an MVP and only contains one template. All templates are the same.
+                  </Typography>
     </Grid>
   );
 };
