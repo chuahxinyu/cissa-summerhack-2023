@@ -49,8 +49,8 @@ const ChooseTemplate = ({
   ];
   return (
     <Container>
-      <Typography variant="h1">
-        2. Choose a Template
+      <Typography variant="h2" gutterBottom>
+        1. Choose a Template
       </Typography>
       <Container style={{ width: '100%', overflow: 'auto', display: 'flex' }}>
         {templates.map((template, i) => (

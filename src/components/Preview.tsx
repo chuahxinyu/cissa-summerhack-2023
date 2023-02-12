@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import jsPDF from 'jspdf';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -14,6 +14,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   const [numPages, setNumPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [blobUrl, setBlobUrl] = useState('');
+  const [isUpdatedBlob, setIsUpdatedBlob] = useState(false);
 
   /**
    * Automatically reload preview when resume data changes.
@@ -34,15 +35,15 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     if (template === 'Template 1 Name') {
       htmlStringTemp = template1(resumeDataCopy);
     }
-
-    // Create Document Blob usng HTML and jsPdf
-    doc.html(htmlStringTemp, {
-      callback: function (doc) {
-        const blobPDF = new Blob([doc.output('blob')], {
+    let isBlobUrlSet = false;
+    await doc.html(htmlStringTemp, {
+      callback: async function (doc: { output: (arg0: string) => BlobPart }) {
+        let blobPDF = new Blob([doc.output('blob')], {
           type: 'application/pdf',
         });
         const blobUrl = URL.createObjectURL(blobPDF);
         setBlobUrl(blobUrl);
+        isBlobUrlSet = true;
       },
       x: 10,
       y: 10,

@@ -1,52 +1,33 @@
 import * as Yup from 'yup';
 import { Grid, Typography } from '@mui/material';
-import { IAboutMeSection } from '../types';
+import { IAboutMeSection} from '../types';
 import TextInputField from '../Forms/TextInputField';
+import { Field } from 'formik';
 
-const INITIAL_FORM_STATE: IAboutMeSection = {
-  name: '',
-  lastName: '',
-  email: '',
-  phoneNo: '',
-  address: '',
-  jobTitle: '',
-  profile: '',
-};
-
-const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
-  name: Yup.string().max(15, 'Must be 20 characters or less'),
-  lastName: Yup.string().max(20, 'Must be 20 characters or less'),
-  email: Yup.string().email('Invalid email address'),
-  phoneNo: Yup.number().typeError('Must be a number'),
-  address: Yup.string(),
-  jobTitle: Yup.string(),
-  profile: Yup.string(),
-});
-
-const AboutMe = () => {
+const AboutMe = ({ isExpanded }: { isExpanded: boolean }) => {
   return (
-    <Grid container spacing={3} id="aboutMe">
-      <Grid item xs={12}>
-        <Typography variant="h2">About Me</Typography>
-      </Grid>
+    <Card variant="outlined">
+      <CardContent>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Field
+            type="checkbox"
+            name="aboutMe.isExpanded"
+            aria-label="Expand/Collapse"
+            as={FormControlLabel}
+            control={<Checkbox />}
+          />
+          <Typography variant="h5">About Me</Typography>
+        </Box>
 
       <Grid container item spacing={2} id="name">
         <Grid item xs={12}>
           <Typography>Name</Typography>
         </Grid>
         <Grid item xs>
-          <TextInputField
-            label="First Name"
-            name="name"
-            placeholder="e.g. Mai"
-          />
+          <TextInputField label="First Name" name="name" placeholder="e.g. Mai" />
         </Grid>
         <Grid item xs>
-          <TextInputField
-            label="Last Name"
-            name="lastName"
-            placeholder="e.g. Pham"
-          />
+          <TextInputField label="Last Name" name="lastName" placeholder="e.g. Pham" />
         </Grid>
       </Grid>
 
@@ -55,25 +36,13 @@ const AboutMe = () => {
           <Typography>Contact details</Typography>
         </Grid>
         <Grid item xs>
-          <TextInputField
-            label="Email"
-            name="email"
-            placeholder="e.g. maiphs@potato.com"
-          />
+          <TextInputField label="Email" name="email" placeholder="e.g. maiphs@potato.com" />
         </Grid>
         <Grid item xs>
-          <TextInputField
-            label="Phone"
-            name="phoneNo"
-            placeholder="e.g. 0411111111"
-          />
+          <TextInputField label="Phone" name="phoneNo" placeholder="e.g. 0411111111" />
         </Grid>
         <Grid item xs>
-          <TextInputField
-            label="Address"
-            name="address"
-            placeholder="e.g. 111 Potato Rd, Potato, POT 3000"
-          />
+          <TextInputField label="Address" name="address" placeholder="e.g. 111 Potato Rd, Potato, POT 3000" />
         </Grid>
       </Grid>
 
@@ -82,11 +51,7 @@ const AboutMe = () => {
           <Typography>Job Title</Typography>
         </Grid>
         <Grid item xs>
-          <TextInputField
-            label="Job Title"
-            name="jobTitle"
-            placeholder="e.g. Graphic Designer"
-          />
+          <TextInputField label="Job Title" name="jobTitle" placeholder="e.g. Graphic Designer" />
         </Grid>
       </Grid>
 
@@ -95,11 +60,7 @@ const AboutMe = () => {
           <Typography>Profile</Typography>
         </Grid>
         <Grid item xs>
-          <TextInputField
-            label="Profile"
-            name="profile"
-            placeholder="e.g. Second year Media and Communications looking for opportunities in..."
-          />
+          <TextInputField label="Profile" name="profile" placeholder="e.g. Second year Media and Communications looking for opportunities in..." />
         </Grid>
       </Grid>
     </Grid>

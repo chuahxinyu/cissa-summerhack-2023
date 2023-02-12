@@ -1,69 +1,76 @@
-import * as Yup from 'yup';
-import { Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Checkbox, Collapse, FormControlLabel, Grid, IconButton } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
-import { IDetailedSubsection, BulletPoint } from '../types';
+import { IDetailedSubsection } from '../types';
+import BulletsList from './BulletsList';
+import DeleteIcon from '@mui/icons-material/Delete';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Field } from 'formik';
 
-const INITIAL_FORM_STATE: IDetailedSubsection = {
-  title: '',
-  subtitle: '',
-  date: '',
-  location: '',
-  bullets: [] as Array<BulletPoint>,
-};
-
-interface DetailedSubsectionProps {
-  titlesName: string;
-  subtitlesName?: string;
-  hasDate?: boolean;
-  hasLocation?: boolean;
-}
-
-const defaultProps: DetailedSubsectionProps = {
-  titlesName: 'title',
-  hasDate: false,
-  hasLocation: false,
-};
-
-const DetailedSubsection: React.FC<DetailedSubsectionProps> = ({
-  titlesName,
-  subtitlesName,
-  hasDate,
-  hasLocation,
+const DetailedSubsection = ({
+  subsection,
+  namePrefix,
+  index,
+  removeFunction,
+  isUpDisabled,
+  isDownDisabled,
+  moveUpFunction,
+  moveDownFunction,
+  isExpanded,
+}: {
+  subsection: IDetailedSubsection;
+  namePrefix: string;
+  index: number;
+  removeFunction: () => void;
+  isUpDisabled: boolean;
+  isDownDisabled: boolean;
+  moveUpFunction: () => void;
+  moveDownFunction: () => void;
+  isExpanded: boolean;
 }) => {
   return (
-    <Grid container item spacing={2}>
-      <Grid item xs={12}>
-        <TextInputField label={titlesName} name="title" />
-      </Grid>
-
-      {subtitlesName !== undefined && (
-        <Grid item xs={6}>
-          <TextInputField label={subtitlesName} name="subtitle" />
-        </Grid>
-      )}
-
-      {hasDate && (
-        <Grid item xs>
-          <TextInputField
-            label="Date"
-            name="date"
-            placeholder="e.g. June 2020 - December 2020"
+    <Card variant="outlined">
+      <CardContent>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Field
+            type="checkbox"
+            name={`${namePrefix}.${index}.isExpanded`}
+            aria-label="Expand/Collapse"
+            as={FormControlLabel}
+            control={<Checkbox />}
           />
-        </Grid>
-      )}
+          <Box sx={{ width: '100%' }}>
+            <TextInputField
+              label="Subsection Title"
+              name={`${namePrefix}.${index}.title`}
+              inputProps={{ style: { fontSize: 40 } }}
+            />
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <IconButton aria-label="move up" disabled={isUpDisabled} onClick={moveUpFunction}>
+              <KeyboardArrowUpIcon />
+            </IconButton>
+            <IconButton aria-label="move down" disabled={isDownDisabled} onClick={moveDownFunction}>
+              <KeyboardArrowDownIcon />
+            </IconButton>
+            <IconButton aria-label="delete" color="error" onClick={removeFunction}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        </Box>
+        <Collapse in={isExpanded}>
+          <Grid>
+            <TextInputField label="Subsection Subtitle" name={`${namePrefix}.${index}.subtitle`} size="small" />
+            <TextInputField label="Location" name={`${namePrefix}.${index}.location`} size="small" />
+            <TextInputField label="Start Date" name={`${namePrefix}.${index}.startDate`} size="small" />
+            <TextInputField label="End Date" name={`${namePrefix}.${index}.endDate`} size="small" />
 
-      {hasLocation && (
-        <Grid item xs>
-          <TextInputField label="Location" name="location" />
-        </Grid>
-      )}
-
-      <Grid item xs={12}>
-        <TextInputField label="Description" name="description" />
-      </Grid>
-    </Grid>
+            <BulletsList bullets={subsection.bullets} name={`${namePrefix}.${index}.bullets`} />
+          </Grid>
+        </Collapse>
+      </CardContent>
+    </Card>
   );
 };
-// TODO: find out how to replace one description box to BulletSections
 
 export default DetailedSubsection;
