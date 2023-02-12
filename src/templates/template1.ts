@@ -88,7 +88,6 @@ body {
     background: white;
     color: black;
     font: 18px 'Helvetica Neue', Arial, sans-serif;
-    width: 100px;
 }
 ul {
   padding-inline-start: 1rem;
