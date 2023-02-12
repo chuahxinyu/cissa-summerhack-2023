@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import jsPDF from 'jspdf';
 import { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
@@ -55,15 +55,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   };
 
   return (
-    <Container>
-      <Grid container spacing={3} direction="column">
-        <Grid item>
-          <Typography variant="h1">
-            3. Download your resume
-          </Typography>
-        </Grid>
-
-        <Grid container item spacing={2} direction="column" alignItems="center" justifyContent="center">
+    <Grid container item spacing={2} direction="column" alignItems="center" justifyContent="center" sx={{px: 7, py: 5}}>
           <Grid item>
             <Document
               file={blobUrl}
@@ -109,8 +101,6 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
             </Button>
           </Grid>
         </Grid>
-      </Grid>
-    </Container>
   );
 };
 

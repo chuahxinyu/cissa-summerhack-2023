@@ -4,6 +4,8 @@ import { INITIAL_FORM_STATE } from './components/constants';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
 import { IResumeData } from './components/types';
+import {Container, Card, CardHeader, ThemeProvider} from '@mui/material/';
+import theme from './theme';
 
 function App() {
   const RESUME_DATA_INITIAL: IResumeData = {
@@ -32,9 +34,24 @@ function App() {
 
   return (
     <div className="App">
-      <ChooseTemplate setResumeData={setResumeData} />
-      <InputData setResumeData={setResumeData} resumeData={resumeData} />
-      <Preview resumeData={resumeData} />
+      <ThemeProvider theme={theme}>
+        <Container maxWidth="lg">
+          <Card>
+            <CardHeader title="1. Choose a Template"/>
+            <ChooseTemplate setResumeData={setResumeData} />
+          </Card>
+          <br /><br />
+          <Card>
+            <CardHeader title="2. Your Information"/>
+            <InputData setResumeData={setResumeData} resumeData={resumeData} />
+          </Card>
+          <br /><br />
+          <Card>
+            <CardHeader title="3. Preview"/>
+            <Preview resumeData={resumeData} />
+          </Card>
+        </Container>
+      </ThemeProvider>
     </div>
   );
 }
