@@ -5,7 +5,7 @@ function addLineBreaksToText(doc: jsPDF, text: StringOptional): StringOptional {
   if (text === undefined) {
     return undefined;
   }
-  const splitArray = doc.splitTextToSize(text, 600);
+  const splitArray = doc.splitTextToSize(text, 740);
 
   return splitArray.join('<br>');
 }
