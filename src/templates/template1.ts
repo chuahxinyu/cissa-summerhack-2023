@@ -1,7 +1,8 @@
-import { IResumeData, StringOptional } from '../components/types';
+import { IResumeData } from '../components/types';
 import jsPDF from 'jspdf';
 import { IGenerateTemplateProps } from './types';
-import { addLineBreaks } from '../utils/removeSpaces';
+
+type StringOptional = string | undefined;
 
 export const generateTemplate1 = ({
   resumeDataCopy,
@@ -9,7 +10,7 @@ export const generateTemplate1 = ({
 }: IGenerateTemplateProps): jsPDF => {
   const doc = new jsPDF('p', 'pt', 'a4');
   const margin = 36; // narrow margin - 12.7 mm
-  const htmlStringTemp = template1(doc, resumeDataCopy);
+  const htmlStringTemp = template1(resumeDataCopy);
   doc.html(htmlStringTemp, {
     callback: async function (doc: { output: (arg0: string) => BlobPart }) {
       const blobPDF = new Blob([doc.output('blob')], {
@@ -24,15 +25,8 @@ export const generateTemplate1 = ({
   return doc;
 };
 
-export const template1 = (doc: jsPDF, resumeData: IResumeData) => {
-  resumeData = addLineBreaks(doc, resumeData);
-
+export const template1 = (resumeData: IResumeData) => {
   const { aboutMe, sections } = resumeData;
-
-  console.log(sections[1]);
-  if (sections[0].sectionType === 'detailed') {
-    console.log(sections[0].subSections[0].title);
-  }
 
   const arrayToBullets = (arr: Array<StringOptional>): string => {
     return arr
@@ -58,17 +52,15 @@ export const template1 = (doc: jsPDF, resumeData: IResumeData) => {
     },
     get allSections() {
       // call detailed and bullet, map `section`
-
       const allSections = sections.map((section) => {
         if (section.sectionType === 'detailed') {
           const subSections = section.subSections.map(
             (subSection) => `
           <li>
-            <h4>${subSection.title}&nbsp;${subSection.location}</h4>
-            <h5>${subSection.subtitle}&nbsp;${
-              subSection.startDate
-            }&nbsp;-&nbsp;${subSection.endDate}</h5>
-            <h5></h5>
+            <h4>${subSection.title}</h4>
+            <h5>${subSection.subtitle}</h5>
+            <h5>${subSection.location}</h5>
+            <h5>${subSection.startDate}&nbsp;-&nbsp;${subSection.endDate}</h5>
             <ul>
               ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
             </ul>

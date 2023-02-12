@@ -15,7 +15,7 @@ const AboutMe = ({ isExpanded }: { isExpanded: boolean }) => {
             as={FormControlLabel}
             control={<Checkbox />}
           />
-          <Typography variant="h5">About Me</Typography>
+          <Typography variant="h4">About Me</Typography>
         </Box>
       <Collapse in={isExpanded}>
       <Grid container item spacing={2} id="name">
