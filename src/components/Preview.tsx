@@ -1,27 +1,41 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
-import jsPDF from 'jspdf';
+
 import { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { IResumeData } from './types';
 import { testTemplate } from '../templates/testTemplate';
-import { template1 } from '../templates/template1';
+import { generateTemplate1, template1 } from '../templates/template1';
 import { removeSpaces } from '../utils/removeSpaces';
+import jsPDF from 'jspdf';
 
 const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
-  const doc = new jsPDF();
-  const [numPages, setNumPages] = useState(1);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [blobUrl, setBlobUrl] = useState('');
-  const [isUpdatedBlob, setIsUpdatedBlob] = useState(false);
+  const [numPages, setNumPages] = useState<number>(1);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [blobUrl, setBlobUrl] = useState<string>('');
 
   /**
    * Automatically reload preview when resume data changes.
-   */
-  useEffect(() => {
-    reloadPreview();
+  */
+ useEffect(() => {
+   reloadPreview();
   }, [resumeData]);
+
+  const generatePdf = (): jsPDF => {
+    // Get Template and Remove Spaces from resumeData
+    const template = resumeData.template;
+    const resumeDataCopy: IResumeData = removeSpaces(
+      JSON.parse(JSON.stringify(resumeData)),
+    );
+    if (template === 'Template 1 Name') {
+      return generateTemplate1({resumeDataCopy: resumeDataCopy, setBlobUrl: setBlobUrl})
+    } else {
+      const doc = new jsPDF();
+      doc.text(['string1', 'string2', 'string3'], 10, 10);
+      return doc;
+    }
+  }
 
   const reloadPreview = async () => {
     // Get Template and Remove Spaces from resumeData
@@ -29,29 +43,17 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     const resumeDataCopy: IResumeData = removeSpaces(
       JSON.parse(JSON.stringify(resumeData)),
     );
-
-    // Generate HTML String based on Template
-    let htmlStringTemp = testTemplate(resumeDataCopy);
-    if (template === 'Template 1 Name') {
-      htmlStringTemp = template1(resumeDataCopy);
-    }
-    let isBlobUrlSet = false;
-    await doc.html(htmlStringTemp, {
-      callback: async function (doc: { output: (arg0: string) => BlobPart }) {
-        let blobPDF = new Blob([doc.output('blob')], {
-          type: 'application/pdf',
-        });
-        const blobUrl = URL.createObjectURL(blobPDF);
-        setBlobUrl(blobUrl);
-        isBlobUrlSet = true;
-      },
-      x: 10,
-      y: 10,
+    const doc = generatePdf()
+    let blobPDF = new Blob([doc.output('blob')], {
+    type: 'application/pdf',
     });
+    const blobUrl = URL.createObjectURL(blobPDF);
+    setBlobUrl(blobUrl);
   };
-
+  
   const download = () => {
-    doc.save();
+    const doc: jsPDF = generatePdf()
+    doc.save('Resume.pdf');
   };
 
   return (

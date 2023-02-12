@@ -1,19 +1,39 @@
 import { IResumeData } from '../components/types';
+import jsPDF from 'jspdf';
+import { Dispatch, SetStateAction } from 'react';
+import { IGenerateTemplateProps } from './types';
+
+
+
+export const generateTemplate1 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplateProps): jsPDF => {
+  const doc = new jsPDF();
+  const htmlStringTemp = template1(resumeDataCopy)
+  doc.html(htmlStringTemp, {
+    callback: async function (doc: { output: (arg0: string) => BlobPart }) {
+      let blobPDF = new Blob([doc.output('blob')], {
+        type: 'application/pdf',
+      });
+      const blobUrl = URL.createObjectURL(blobPDF);
+      setBlobUrl(blobUrl);
+    },
+    x: 10,
+    y: 10,
+  });
+  return doc;
+}
 
 export const template1 = (resumeData: IResumeData) => {
   const { template, aboutMe, sections } = resumeData;
 
   const temp = {
     get aboutMeString() {
+      const infoList = [aboutMe.address, aboutMe.phoneNo, aboutMe.email]
       return `<header>
-                <h2>${aboutMe.name}${
-        aboutMe.lastName ? ' ' + aboutMe.lastName : null
-      }</h2>
-                <ul id="header-left" title="mail and phone">
-                    ${aboutMe.address ? `<li>${aboutMe.address}</li>` : null}
-                    ${aboutMe.phoneNo ? `<li>${aboutMe.phoneNo}</li>` : null}
+                <h2>${aboutMe.name}&nbsp;${aboutMe.lastName}</h2>
+                <ul>
+                    ${infoList.map((info) => {console.log({info: info});return `<li>${info || ''}</li>`})}
                 </ul>
-                <ul id="header-right" title="web">
+                <ul>
                     ${aboutMe.links?.map(
                       (link) =>
                         `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`,
@@ -21,51 +41,51 @@ export const template1 = (resumeData: IResumeData) => {
                 </ul>
             </header>`;
     },
-    get detailedSectionString() {
-      // param: {section}
-      return ``;
-    },
-    get bulletSectionString() {
-      return ``;
-    },
     get allSections() {
       // call detailed and bullet, map `section`
-      const res = sections.map((section) => ``);
-      return res;
+      const allSections = sections.map((section) => {
+        if (section.sectionType === 'detailed') {
+          const subSections = section.subSections.map((subSection) => `
+          <li>
+            <h4>${subSection.title},&nbsp;${subSection.location}</h4>
+            <h5>${subSection.subtitle}&nbsp;${subSection.startDate}-${subSection.endDate}</h5>
+            <h5></h5>
+            <ul>
+              ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
+            </ul>
+       	</li>
+          `)
+          return `<section><h3>${section.sectionTitle}</h3>
+		<ul>
+      ${subSections.join('\n')}
+		</ul>
+	</section>`
+        } else return `<section><h3>${section.sectionTitle}</h3>
+		<ul>
+			${section.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
+		</ul>
+	</section>`
+      });
+      console.log({allSections: allSections})
+      return allSections.join('\n');
     },
   };
-  const res = `
-<body>
-<style>
+
+  const styles = `<style>
 html {
     background: white;
     color: black;
     font: 5px 'Helvetica Neue', Arial, sans-serif;
 }
-body {
-    margin: 2em auto;
-    max-width: 760px;
-    width: 65%;
-}
-section {
-    clear: both;
-    margin-top: 3em;
+ul {
+  padding-inline-start: 1rem;
 }
 li {
-    list-style-type: disc;
-}
-section > ul > li,
-header > ul > li {
-    list-style-type: none;
-    margin-bottom: .5em;
+  list-style-type: disc;
 }
 .headline-name {
     border-bottom: 1px solid black;
     padding-bottom: .5em;
-}
-.contact-column {
-    float: left;
-    padding: 0 1px;
 }
 a,
 a:link,
@@ -82,34 +102,13 @@ a:active {
     border-bottom: 1px solid rgb(0, 120, 180);
     color: rgb(0, 120, 180);
 }
-</style>
+</style>`
+
+  const res = `
+<body>
+  ${styles}
 	${temp.aboutMeString}
-	<section id="education"><h3>Education</h3>
-		<ul title="education">
-		<li>
-			<h4>Degree, Where, When</h4>
-        		<ul>
-        			<li>Stuff about your degree</li>
-       		</ul>
-       	</li>
-		</ul>
-	</section>
-	<section id="skills"><h3>Skills</h3>
-		<ul title="skills">
-			<li>Skill 1</li>
-      <li>Skill 2</li>
-		</ul>
-	</section>
-	<section id="experience"><h3>Experience</h3>
-	<ul title="experience">
-		<li>
-			<h4>Job Title, Place, Time</h4>
-			<ul>
-				<li>Stuff you did</li>
-			</ul>
-		</li>
-	</ul>
-	</section>
+  ${temp.allSections}
 </body>`;
   return res;
 };
