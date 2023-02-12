@@ -97,26 +97,30 @@ const InputData = ({
                             ),
                           )}
                         </Grid>
-                      <Grid item>
-                        <Button
-                          variant="outlined"
-                          onClick={() => push(INITIAL_BULLET_SECTION)}
-                          startIcon={<AddCircleOutlineIcon />}>
-                          Add Bullet Section
-                        </Button>
-                        <Button
-                          variant="outlined"
-                          onClick={() => push(INITIAL_DETAILED_SECTION)}
-                          startIcon={<AddCircleOutlineIcon />}>
-                          Add Detailed Section
-                        </Button>
+                      <Grid container item style={{textAlign: "center"}}>
+                        <Grid item xs={6}>
+                          <Button
+                            variant="outlined"
+                            onClick={() => push(INITIAL_BULLET_SECTION)}
+                            startIcon={<AddCircleOutlineIcon />}>
+                            Add Bullet Section
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Button
+                            variant="outlined"
+                            onClick={() => push(INITIAL_DETAILED_SECTION)}
+                            startIcon={<AddCircleOutlineIcon />}>
+                            Add Detailed Section
+                          </Button>
+                        </Grid>
                       </Grid>
                     </Grid>
                   )}
                 </FieldArray>
               </Grid>
 
-              <Grid item>
+              <Grid item xs={12} style={{textAlign: "center"}}>
                 <Button disabled={!isValid} type="submit" variant="contained" startIcon={<ReplayIcon />}>
                 Reload
                 </Button>

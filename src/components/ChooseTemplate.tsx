@@ -113,7 +113,7 @@ const ChooseTemplate = ({
                     transition: '0.5s',
                   }}
                 >
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h3" component="div">
                     {template.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">

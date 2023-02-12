@@ -11,8 +11,12 @@ const theme = createTheme({
         fontSize: 20,
         fontFamily: "Roboto",
 
-        h2: {
+        h3: {
             fontSize: 30,
+        },
+
+        h4: {
+            fontSize: 25,
         }
     },
 
