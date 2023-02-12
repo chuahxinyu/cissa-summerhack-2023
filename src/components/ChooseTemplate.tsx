@@ -48,10 +48,7 @@ const ChooseTemplate = ({
     },
   ];
   return (
-    <Container>
-      <Typography variant="h2" gutterBottom>
-        1. Choose a Template
-      </Typography>
+    <Grid container sx={{px: 7, py: 5}}>
       <Container style={{ width: '100%', overflow: 'auto', display: 'flex' }}>
         {templates.map((template, i) => (
           <Container key={i}>
@@ -116,7 +113,7 @@ const ChooseTemplate = ({
                     transition: '0.5s',
                   }}
                 >
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h3" component="div">
                     {template.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -128,7 +125,7 @@ const ChooseTemplate = ({
           </Container>
         ))}
       </Container>
-    </Container>
+    </Grid>
   );
 };
 
