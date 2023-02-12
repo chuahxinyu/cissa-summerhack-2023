@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { IGenerateTemplateProps } from './types';
 
 
+type String = string | undefined;
 
 export const generateTemplate1 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplateProps): jsPDF => {
   const doc = new jsPDF();
@@ -25,13 +26,21 @@ export const generateTemplate1 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplat
 export const template1 = (resumeData: IResumeData) => {
   const { template, aboutMe, sections } = resumeData;
 
+  const arrayToBullets = (arr: Array<String>): string => {
+    return arr
+      .map((item: String) => `<li>${item || ''}</li>`)
+      .reduce((result: string, item: string): string => (
+        result + item
+      ), '');
+  }
+
   const temp = {
     get aboutMeString() {
       const infoList = [aboutMe.address, aboutMe.phoneNo, aboutMe.email]
       return `<header>
                 <h2>${aboutMe.name}&nbsp;${aboutMe.lastName}</h2>
                 <ul>
-                    ${infoList.map((info) => {console.log({info: info});return `<li>${info || ''}</li>`})}
+                  ${arrayToBullets(infoList)} 
                 </ul>
                 <ul>
                     ${aboutMe.links?.map(
