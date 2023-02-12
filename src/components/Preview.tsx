@@ -48,12 +48,8 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
     type: 'application/pdf',
     });
     const blobUrl = URL.createObjectURL(blobPDF);
+    console.log(blobUrl);
     setBlobUrl(blobUrl);
-  };
-  
-  const download = () => {
-    const doc: jsPDF = generatePdf()
-    doc.save('Resume.pdf');
   };
 
   return (
@@ -106,7 +102,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
           </Grid>
 
           <Grid item>
-            <Button variant="contained" onClick={() => download()}>
+            <Button variant="contained" component="a" href={blobUrl} download="Resume.pdf">
               Download
             </Button>
           </Grid>
