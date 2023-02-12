@@ -39,6 +39,7 @@ const DetailedSection: React.FC<DetailedSectionProps> = ({ section, index, remov
                     subsection={subsection}
                     namePrefix={`sections.${index}.subSections`}
                     index={subsectionIndex}
+                    removeFunction={() => remove(subsectionIndex)}
                   />
                 ))}
               <Button
