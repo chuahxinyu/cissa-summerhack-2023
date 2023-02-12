@@ -47,7 +47,7 @@ const BulletSection: React.FC<BulletSectionProps> = ({
           <Box sx={{ width: '100%' }}>
             <TextInputField
               label="Section Name"
-              name={`sections.${index}.sectionName`}
+              name={`sections.${index}.sectionTitle`}
               placeholder="eg. Skills, Achievements, Publications, Projects"
             />
           </Box>

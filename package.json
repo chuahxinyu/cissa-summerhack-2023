@@ -21,7 +21,7 @@
     "lint:staged"
   ],
   "lint-staged": {
-    "./app/**/*.{ts,tsx}": [
+    "./src/**/*.{ts,tsx}": [
       "npm run format:lint:fix"
     ],
     "./**/*.json": [

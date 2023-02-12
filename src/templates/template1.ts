@@ -1,71 +1,111 @@
 import { IResumeData } from '../components/types';
+import jsPDF from 'jspdf';
+import { IGenerateTemplateProps } from './types';
+
+type StringOptional = string | undefined;
+
+export const generateTemplate1 = ({
+  resumeDataCopy,
+  setBlobUrl,
+}: IGenerateTemplateProps): jsPDF => {
+  const doc = new jsPDF('p', 'pt', 'a4');
+  let margin = 36; // narrow margin - 12.7 mm
+  const htmlStringTemp = template1(resumeDataCopy)
+  doc.html(htmlStringTemp, {
+    callback: async function (doc: { output: (arg0: string) => BlobPart }) {
+      const blobPDF = new Blob([doc.output('blob')], {
+        type: 'application/pdf',
+      });
+      const blobUrl = URL.createObjectURL(blobPDF);
+      setBlobUrl(blobUrl);
+    },
+    margin: [margin, margin, margin, margin],
+    autoPaging: 'text',
+  });
+  return doc;
+};
 
 export const template1 = (resumeData: IResumeData) => {
-  const { template, aboutMe, sections } = resumeData;
+  const { aboutMe, sections } = resumeData;
+
+  const arrayToBullets = (arr: Array<StringOptional>): string => {
+    return arr
+      .map((item: StringOptional) => `<li>${item || ''}</li>`)
+      .reduce((result: string, item: string): string => result + item, '');
+  };
 
   const temp = {
     get aboutMeString() {
+      const infoList = [aboutMe.address, aboutMe.phoneNo, aboutMe.email];
       return `<header>
-                <h2>${aboutMe.name}${
-        aboutMe.lastName ? ' ' + aboutMe.lastName : null
-      }</h2>
-                <ul id="header-left" title="mail and phone">
-                    ${aboutMe.address ? `<li>${aboutMe.address}</li>` : null}
-                    ${aboutMe.phoneNo ? `<li>${aboutMe.phoneNo}</li>` : null}
+                <h2>${aboutMe.name}&nbsp;${aboutMe.lastName}</h2>
+                <ul>
+                  ${arrayToBullets(infoList)} 
                 </ul>
-                <ul id="header-right" title="web">
-                    ${aboutMe.links?.map(
+                <ul>
+                    ${aboutMe.links?aboutMe.links.map(
                       (link) =>
                         `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`,
-                    )}
+                    ).reduce((result: string, item: string): string => result + item, ''):''}
                 </ul>
             </header>`;
     },
-    get detailedSectionString() {
-      // param: {section}
-      return ``;
-    },
-    get bulletSectionString() {
-      return ``;
-    },
     get allSections() {
       // call detailed and bullet, map `section`
-      const res = sections.map((section) => ``);
-      return res;
+      const allSections = sections.map((section) => {
+        if (section.sectionType === 'detailed') {
+          const subSections = section.subSections.map(
+            (subSection) => `
+          <li>
+            <h4>${subSection.title}</h4>
+            <h5>${subSection.subtitle}</h5>
+            <h5>${subSection.location}</h5>
+            <h5>${subSection.startDate}&nbsp;-&nbsp;${subSection.endDate}</h5>
+            <ul>
+              ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`).join('')}
+            </ul>
+       	</li>
+          `,
+          );
+          return `<section><h3>${section.sectionTitle}</h3>
+		<ul>
+      ${subSections.join('')}
+		</ul>
+	</section>`;
+        } else
+          return `<section><h3>${section.sectionTitle}</h3>
+		<ul>
+			${section.bullets.map((bullet) => `<li>${bullet.text}</li>`).join('')}
+		</ul>
+	</section>`;
+      }).join('');
+      return allSections;
     },
   };
-  const res = `
-<body>
-<style>
-html {
+
+  const styles = `<style>
+body {
     background: white;
     color: black;
-    font: 5px 'Helvetica Neue', Arial, sans-serif;
+    font: 18px 'Helvetica Neue', Arial, sans-serif;
 }
-body {
-    margin: 2em auto;
-    max-width: 760px;
-    width: 65%;
+ul {
+  padding-inline-start: 1rem;
 }
-section {
-    clear: both;
-    margin-top: 3em;
+h4 {
+  margin-bottom: 0.5rem;
+}
+h5 {
+  padding: 0rem;
+  margin-top: 0rem;
+  margin-bottom: 0.5rem;
 }
 li {
-    list-style-type: disc;
-}
-section > ul > li,
-header > ul > li {
-    list-style-type: none;
-    margin-bottom: .5em;
+  list-style-type: disc;
 }
 .headline-name {
     border-bottom: 1px solid black;
     padding-bottom: .5em;
-}
-.contact-column {
-    float: left;
-    padding: 0 1px;
 }
 a,
 a:link,
@@ -82,34 +122,13 @@ a:active {
     border-bottom: 1px solid rgb(0, 120, 180);
     color: rgb(0, 120, 180);
 }
-</style>
+</style>`;
+
+  const res = `
+<body>
+  ${styles}
 	${temp.aboutMeString}
-	<section id="education"><h3>Education</h3>
-		<ul title="education">
-		<li>
-			<h4>Degree, Where, When</h4>
-        		<ul>
-        			<li>Stuff about your degree</li>
-       		</ul>
-       	</li>
-		</ul>
-	</section>
-	<section id="skills"><h3>Skills</h3>
-		<ul title="skills">
-			<li>Skill 1</li>
-      <li>Skill 2</li>
-		</ul>
-	</section>
-	<section id="experience"><h3>Experience</h3>
-	<ul title="experience">
-		<li>
-			<h4>Job Title, Place, Time</h4>
-			<ul>
-				<li>Stuff you did</li>
-			</ul>
-		</li>
-	</ul>
-	</section>
+  ${temp.allSections}
 </body>`;
   return res;
 };
