@@ -3,7 +3,8 @@ import { IResumeData } from "../components/types";
 import { IGenerateTemplateProps } from "./types";
 
 export const generateTemplate2 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplateProps) => {
-  const doc = new jsPDF();
+  const doc = new jsPDF('p', 'pt', 'a4');
+  let margin = 36; // narrow margin - 12.7 mm
   const htmlStringTemp = template2(resumeDataCopy)
   doc.html(htmlStringTemp, {
     callback: async function (doc: { output: (arg0: string) => BlobPart }) {
@@ -13,13 +14,16 @@ export const generateTemplate2 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplat
       const blobUrl = URL.createObjectURL(blobPDF);
       setBlobUrl(blobUrl);
     },
-    x: 10,
-    y: 10,
+    x: margin,
+    y: margin,
   });
   return doc;
 }
 
 export const template2 = (resumeData: IResumeData) => {
+
+  
+
   const style = ` <style>
     * {
   margin: 0;

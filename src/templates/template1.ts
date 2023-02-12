@@ -19,8 +19,8 @@ export const generateTemplate1 = ({
       const blobUrl = URL.createObjectURL(blobPDF);
       setBlobUrl(blobUrl);
     },
-    x: margin,
-    y: margin,
+    margin: [margin, margin, margin, margin],
+    autoPaging: 'text',
   });
   return doc;
 };
@@ -43,10 +43,10 @@ export const template1 = (resumeData: IResumeData) => {
                   ${arrayToBullets(infoList)} 
                 </ul>
                 <ul>
-                    ${aboutMe.links?.map(
+                    ${aboutMe.links?aboutMe.links.map(
                       (link) =>
                         `<li><a href="${link.url}" target="_blank">${link.label}</a></li>`,
-                    )}
+                    ).reduce((result: string, item: string): string => result + item, ''):''}
                 </ul>
             </header>`;
     },
@@ -63,33 +63,33 @@ export const template1 = (resumeData: IResumeData) => {
             }&nbsp;-&nbsp;${subSection.endDate}</h5>
             <h5></h5>
             <ul>
-              ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
+              ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`).join('')}
             </ul>
        	</li>
           `,
           );
           return `<section><h3>${section.sectionTitle}</h3>
 		<ul>
-      ${subSections.join('\n')}
+      ${subSections.join('')}
 		</ul>
 	</section>`;
         } else
           return `<section><h3>${section.sectionTitle}</h3>
 		<ul>
-			${section.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
+			${section.bullets.map((bullet) => `<li>${bullet.text}</li>`).join('')}
 		</ul>
 	</section>`;
-      });
-      console.log({ allSections: allSections });
-      return allSections.join('\n');
+      }).join('');
+      return allSections;
     },
   };
 
   const styles = `<style>
-html {
+body {
     background: white;
     color: black;
     font: 18px 'Helvetica Neue', Arial, sans-serif;
+    width: 100px;
 }
 ul {
   padding-inline-start: 1rem;
