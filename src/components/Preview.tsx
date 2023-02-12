@@ -56,6 +56,7 @@ const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
   
   const download = () => {
     const doc: jsPDF = generatePdf()
+    window.open(blobUrl)
     doc.save('Resume.pdf');
   };
 
