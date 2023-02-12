@@ -5,13 +5,14 @@ import TextInputField from '../Forms/TextInputField';
 
 const BulletSection = ({ section }: { section: IBulletSection }) => {
   return (
-    <Grid container spacing={4} paddingLeft={4}>
-      <Grid container item spacing={2} id="bulletSection">
-        <Typography variant="h4" paddingTop={5}>
+    <Grid container spacing={3} id="bulletSection">
+      <Grid item xs={12}>
+        <Typography variant="h4">
           {section.sectionTitle}
         </Typography>
-        <Grid container item direction="column" id="bulletSectionTitleField">
-          <Grid item xs>
+
+        <Grid container item spacing={0} id="bulletSectionTitleField">
+          <Grid item xs={12}>
             <TextInputField
               label="Bullet Point"
               name="sectionTitle"
@@ -19,7 +20,7 @@ const BulletSection = ({ section }: { section: IBulletSection }) => {
               size="small"
             />
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12}>
             <TextInputField
               label="Bullet Point"
               name="sectionTitle"

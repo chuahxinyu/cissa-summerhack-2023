@@ -60,40 +60,54 @@ const InputData = ({
       >
         {({ dirty, isValid, values }) => (
           <Form>
-            <AboutMe />
-            <FieldArray name="sections">
-              {({ insert, remove, push }) => (
-                <Grid>
-                  {values.sections.length > 0 &&
-                    values.sections.map((section, index) =>
-                      section.sectionType === 'bullet' ? (
-                        <BulletSection section={section} />
-                      ) : (
-                        <DetailedSection
-                          name="Education"
-                          titlesName="Educational Institution"
-                          hasDate={true}
-                          hasLocation={true}
-                        />
-                      ),
-                    )}
-                  <button
-                    type="button"
-                    className="secondary"
-                    onClick={() => push(INITIAL_BULLET)}
-                  >
-                    Add Bullet Section
-                  </button>
-                </Grid>
-              )}
-            </FieldArray>
-            <Button
-              disabled={!dirty || !isValid}
-              type="submit"
-              variant="contained"
-            >
-              Submit
-            </Button>
+            <Grid container spacing={3} direction="column">
+              <Grid item>
+                <AboutMe />
+              </Grid>
+
+              <Grid item>
+                <FieldArray name="sections">
+                  {({ insert, remove, push }) => (
+                    <Grid container spacing={3} direction="column">
+                      <Grid item>
+                        {values.sections.length > 0 &&
+                          values.sections.map((section, index) =>
+                            section.sectionType === 'bullet' ? (
+                              <BulletSection section={section} />
+                            ) : (
+                              <DetailedSection
+                                name="Education"
+                                titlesName="Educational Institution"
+                                hasDate={true}
+                                hasLocation={true}
+                              />
+                            ),
+                          )}
+                        </Grid>
+                      <Grid item>
+                        <button
+                          type="button"
+                          className="secondary"
+                          onClick={() => push(INITIAL_BULLET)}
+                        >
+                          Add Bullet Section
+                        </button>
+                      </Grid>
+                    </Grid>
+                  )}
+                </FieldArray>
+              </Grid>
+
+              <Grid item>
+                <Button
+                  disabled={!dirty || !isValid}
+                  type="submit"
+                  variant="contained"
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
           </Form>
         )}
       </Formik>

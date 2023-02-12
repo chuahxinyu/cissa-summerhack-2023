@@ -25,9 +25,9 @@ const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
 
 const AboutMe = () => {
   return (
-    <Grid container item spacing={3} id="aboutMe">
+    <Grid container spacing={3} id="aboutMe">
       <Grid item xs={12}>
-        <Typography variant="h3">About Me</Typography>
+        <Typography variant="h4">About Me</Typography>
       </Grid>
 
       <Grid container item spacing={2} id="name">
