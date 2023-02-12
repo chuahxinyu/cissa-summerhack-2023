@@ -1,8 +1,8 @@
 import { IBulletPoint, IBulletSection } from '../types';
-import { Box, Card, CardContent, Grid, IconButton } from '@mui/material';
+import { Box, Card, CardContent, IconButton } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
-import { FieldArray } from 'formik';
 import DeleteIcon from '@mui/icons-material/Delete';
+import BulletsList from './BulletsList';
 
 const INITIAL_BULLET: IBulletPoint = {
   text: '',
@@ -31,30 +31,7 @@ const BulletSection: React.FC<BulletSectionProps> = ({ section, index, removeFun
             <DeleteIcon />
           </IconButton>
         </Box>
-        <FieldArray name={`sections.${index}.bullets`}>
-          {({ remove, push }) => (
-            <Grid container item direction="column" id="bulletSectionTitleField">
-              {section.bullets.map((bullet, bulletIndex) => (
-                <TextInputField
-                  key={bulletIndex}
-                  label=""
-                  name={`sections.${index}.bullets.${bulletIndex}.text`}
-                  placeholder="e.g. Coding Languages: TypeScript, C++, Java, Python"
-                  size="small"
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      push(INITIAL_BULLET);
-                    }
-                    if (e.key === 'Tab') {
-                      console.log('Tab');
-                    }
-                  }}
-                />
-              ))}
-            </Grid>
-          )}
-        </FieldArray>
+        <BulletsList bullets={section.bullets} name={`sections.${index}.bullets`} />
       </CardContent>
     </Card>
   );

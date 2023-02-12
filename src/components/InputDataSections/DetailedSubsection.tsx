@@ -1,6 +1,7 @@
 import { Card, CardContent, Grid } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { IDetailedSubsection, IBulletPoint } from '../types';
+import BulletsList from './BulletsList';
 
 const DetailedSubsection = ({
   subsection,
@@ -26,7 +27,7 @@ const DetailedSubsection = ({
           <TextInputField label="Start Date" name={`${namePrefix}.${index}.startDate`} size="small" />
           <TextInputField label="End Date" name={`${namePrefix}.${index}.endDate`} size="small" />
 
-          {/* TODO Bullets */}
+          <BulletsList bullets={subsection.bullets} name={`${namePrefix}.${index}.bullets`} />
         </Grid>
       </CardContent>
     </Card>
