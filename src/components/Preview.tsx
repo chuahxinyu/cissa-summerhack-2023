@@ -9,7 +9,6 @@ import { IResumeData } from './types';
 import { testTemplate } from '../templates/testTemplate';
 import { generateTemplate1, template1 } from '../templates/template1';
 import { removeSpaces } from '../utils/removeSpaces';
-import jsPDF from 'jspdf';
 import { generateTemplate2 } from '../templates/template2';
 
 const Preview = ({ resumeData }: { resumeData: IResumeData }) => {
