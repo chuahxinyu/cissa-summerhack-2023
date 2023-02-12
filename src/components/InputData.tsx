@@ -3,29 +3,12 @@ import { Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { Button, Container, Grid, Typography } from '@mui/material';
 import AboutMe from './InputDataSections/AboutMe';
-import { IAboutMeSection, IBulletSection, IResumeData } from './types';
+import { IResumeData } from './types';
 import BulletSection from './InputDataSections/BulletSection';
 import DetailedSection from './InputDataSections/DetailedSection';
-
-const INITIAL_ABOUT_ME: IAboutMeSection = {
-  name: '',
-  lastName: '',
-  email: '',
-  phoneNo: '',
-  address: '',
-  jobTitle: '',
-};
-
-const INITIAL_BULLET_SECTION: IBulletSection = {
-  sectionType: 'bullet',
-  sectionTitle: 'Bullet Section Title',
-  bullets: [{ text: '', subBullets: [] }],
-};
-
-const INITIAL_FORM_STATE: IResumeData = {
-  aboutMe: INITIAL_ABOUT_ME,
-  sections: [INITIAL_BULLET_SECTION],
-};
+import ReplayIcon from '@mui/icons-material/Replay';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { INITIAL_BULLET_SECTION, INITIAL_DETAILED_SECTION } from './constants';
 
 const ERROR_MESSAGE_SCHEMA = Yup.object().shape({
   name: Yup.string().max(15, 'Must be 20 characters or less'),
@@ -56,7 +39,7 @@ const InputData = ({
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             console.log(values);
-            setResumeData((prevState) => ({ ...prevState, aboutMe: values.aboutMe }));
+            setResumeData((prevState) => ({ ...prevState, aboutMe: values.aboutMe, sections: values.sections }));
             setSubmitting(false);
           }, 400);
         }}
@@ -81,13 +64,22 @@ const InputData = ({
                         />
                       ),
                     )}
-                  <button type="button" className="secondary" onClick={() => push(INITIAL_BULLET_SECTION)}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => push(INITIAL_BULLET_SECTION)}
+                    startIcon={<AddCircleOutlineIcon />}>
                     Add Bullet Section
-                  </button>
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => push(INITIAL_DETAILED_SECTION)}
+                    startIcon={<AddCircleOutlineIcon />}>
+                    Add Detailed Section
+                  </Button>
                 </Grid>
               )}
             </FieldArray>
-            <Button disabled={!isValid} type="submit" variant="contained">
+            <Button disabled={!isValid} type="submit" variant="contained" startIcon={<ReplayIcon />}>
               Reload
             </Button>
           </Form>
