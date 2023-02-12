@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-
+import ResumeLabLogo from './ResumeLabLogo';
 
 const Header = () => {
     return (
-      <div>
-        
-        <img src={"../images/logo.svg"} alt="Resume Lab Logo" />
+      <div id="logo">
+        <ResumeLabLogo/>
       </div>
     );
   };

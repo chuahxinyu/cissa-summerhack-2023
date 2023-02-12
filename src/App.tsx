@@ -5,7 +5,7 @@ import ChooseTemplate from './components/ChooseTemplate';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
 import { IResumeData } from './components/types';
-import {Container, Card, CardHeader, ThemeProvider} from '@mui/material/';
+import {Container, Card, CardHeader, Grid, ThemeProvider} from '@mui/material/';
 import theme from './theme';
 
 function App() {
@@ -36,8 +36,12 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Header />
-        <Container maxWidth="lg">
+        <Container maxWidth="md">
+          <Grid container id="tes" alignItems="center">
+            <Grid item style={{textAlign: "center"}} xs={12}>
+              <Header />
+            </Grid>
+          </Grid>
           <Card>
             <CardHeader title="1. Choose a Template"/>
             <ChooseTemplate setResumeData={setResumeData} />
