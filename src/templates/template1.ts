@@ -57,7 +57,7 @@ export const template1 = (resumeData: IResumeData) => {
           const subSections = section.subSections.map((subSection) => `
           <li>
             <h4>${subSection.title},&nbsp;${subSection.location}</h4>
-            <h5>${subSection.subtitle}&nbsp;${subSection.startDate}-${subSection.endDate}</h5>
+            <h5>${subSection.subtitle}&nbsp;${subSection.startDate}&nbsp;-&nbsp;${subSection.endDate}</h5>
             <h5></h5>
             <ul>
               ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
