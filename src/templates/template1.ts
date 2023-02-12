@@ -1,6 +1,5 @@
 import { IResumeData } from '../components/types';
 import jsPDF from 'jspdf';
-import { Dispatch, SetStateAction } from 'react';
 import { IGenerateTemplateProps } from './types';
 
 type StringOptional = string | undefined;
@@ -9,8 +8,9 @@ export const generateTemplate1 = ({
   resumeDataCopy,
   setBlobUrl,
 }: IGenerateTemplateProps): jsPDF => {
-  const doc = new jsPDF();
-  const htmlStringTemp = template1(resumeDataCopy);
+  const doc = new jsPDF('p', 'pt', 'a4');
+  let margin = 36; // narrow margin - 12.7 mm
+  const htmlStringTemp = template1(resumeDataCopy)
   doc.html(htmlStringTemp, {
     callback: async function (doc: { output: (arg0: string) => BlobPart }) {
       const blobPDF = new Blob([doc.output('blob')], {
@@ -19,14 +19,14 @@ export const generateTemplate1 = ({
       const blobUrl = URL.createObjectURL(blobPDF);
       setBlobUrl(blobUrl);
     },
-    x: 10,
-    y: 10,
+    x: margin,
+    y: margin,
   });
   return doc;
 };
 
 export const template1 = (resumeData: IResumeData) => {
-  const { template, aboutMe, sections } = resumeData;
+  const { aboutMe, sections } = resumeData;
 
   const arrayToBullets = (arr: Array<StringOptional>): string => {
     return arr
@@ -89,7 +89,7 @@ export const template1 = (resumeData: IResumeData) => {
 html {
     background: white;
     color: black;
-    font: 5px 'Helvetica Neue', Arial, sans-serif;
+    font: 18px 'Helvetica Neue', Arial, sans-serif;
 }
 ul {
   padding-inline-start: 1rem;
