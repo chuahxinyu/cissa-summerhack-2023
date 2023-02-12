@@ -1,6 +1,7 @@
 import { IResumeData } from '../components/types';
 import jsPDF from 'jspdf';
 import { IGenerateTemplateProps } from './types';
+import { addLineBreaks } from '../utils/removeSpaces';
 
 type StringOptional = string | undefined;
 
@@ -10,7 +11,7 @@ export const generateTemplate1 = ({
 }: IGenerateTemplateProps): jsPDF => {
   const doc = new jsPDF('p', 'pt', 'a4');
   const margin = 36; // narrow margin - 12.7 mm
-  const htmlStringTemp = template1(resumeDataCopy);
+  const htmlStringTemp = template1(doc, resumeDataCopy);
   doc.html(htmlStringTemp, {
     callback: async function (doc: { output: (arg0: string) => BlobPart }) {
       const blobPDF = new Blob([doc.output('blob')], {
@@ -25,7 +26,8 @@ export const generateTemplate1 = ({
   return doc;
 };
 
-export const template1 = (resumeData: IResumeData) => {
+export const template1 = (doc: jsPDF, resumeData: IResumeData) => {
+  resumeData = addLineBreaks(doc, resumeData);
   const { aboutMe, sections } = resumeData;
 
   const arrayToBullets = (arr: Array<StringOptional>): string => {
