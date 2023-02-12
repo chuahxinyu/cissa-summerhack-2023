@@ -3,6 +3,7 @@ import jsPDF from 'jspdf';
 import { IGenerateTemplateProps } from './types';
 
 
+type String = string | undefined;
 
 export const generateTemplate1 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplateProps): jsPDF => {
   const doc = new jsPDF();
@@ -24,13 +25,21 @@ export const generateTemplate1 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplat
 export const template1 = (resumeData: IResumeData) => {
   const { template, aboutMe, sections } = resumeData;
 
+  const arrayToBullets = (arr: Array<String>): string => {
+    return arr
+      .map((item: String) => `<li>${item || ''}</li>`)
+      .reduce((result: string, item: string): string => (
+        result + item
+      ), '');
+  }
+
   const temp = {
     get aboutMeString() {
       const infoList = [aboutMe.address, aboutMe.phoneNo, aboutMe.email]
       return `<header>
                 <h2>${aboutMe.name}&nbsp;${aboutMe.lastName}</h2>
                 <ul>
-                    ${infoList.map((info) => {console.log({info: info});return `<li>${info || ''}</li>`})}
+                  ${arrayToBullets(infoList)} 
                 </ul>
                 <ul>
                     ${aboutMe.links?.map(
@@ -47,7 +56,7 @@ export const template1 = (resumeData: IResumeData) => {
           const subSections = section.subSections.map((subSection) => `
           <li>
             <h4>${subSection.title},&nbsp;${subSection.location}</h4>
-            <h5>${subSection.subtitle}&nbsp;${subSection.startDate}-${subSection.endDate}</h5>
+            <h5>${subSection.subtitle}&nbsp;${subSection.startDate}&nbsp;-&nbsp;${subSection.endDate}</h5>
             <h5></h5>
             <ul>
               ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
