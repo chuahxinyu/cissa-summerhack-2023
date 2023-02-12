@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import ChooseTemplate from './components/ChooseTemplate';
 import { INITIAL_FORM_STATE } from './components/constants';
+import Header from './components/Header';
+import ChooseTemplate from './components/ChooseTemplate';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
 import { IResumeData } from './components/types';
@@ -35,6 +36,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+        <Header />
         <Container maxWidth="lg">
           <Card>
             <CardHeader title="1. Choose a Template"/>
