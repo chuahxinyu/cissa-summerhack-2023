@@ -32,7 +32,7 @@ const InputData = ({
   };
   return (
     <Container>
-      <Typography variant="h2">1. Your Information</Typography>
+      <Typography variant="h2">2. Your Information</Typography>
       <Formik
         enableReinitialize
         initialValues={INITIAL_FORM_STATE}
@@ -47,16 +47,28 @@ const InputData = ({
         {({ dirty, isValid, values }) => (
           <Form>
             <Grid spacing={2}>
-              <AboutMe />
+              <AboutMe isExpanded={values.aboutMe.isExpanded} />
               <FieldArray name="sections">
                 {({ insert, remove, push }) => (
                   <Grid spacing={2}>
                     {values.sections.length > 0 &&
                       values.sections.map((section, i) =>
                         section.sectionType === 'bullet' ? (
-                          <BulletSection key={i} section={section} index={i} removeFunction={() => remove(i)} />
+                          <BulletSection
+                            key={i}
+                            section={section}
+                            index={i}
+                            removeFunction={() => remove(i)}
+                            isExpanded={section.isExpanded}
+                          />
                         ) : (
-                          <DetailedSection section={section} index={i} key={i} removeFunction={() => remove(i)} />
+                          <DetailedSection
+                            section={section}
+                            index={i}
+                            key={i}
+                            removeFunction={() => remove(i)}
+                            isExpanded={section.isExpanded}
+                          />
                         ),
                       )}
                     <Button

@@ -20,6 +20,7 @@ export interface IAboutMeSection {
   jobTitle?: string;
   profile?: string;
   links?: ILink[];
+  isExpanded: boolean;
 }
 
 /* DETAILED SECTION AND SUBSECTION */
@@ -27,6 +28,7 @@ export interface IDetailedSection {
   sectionType: 'detailed';
   sectionTitle: string;
   subSections: IDetailedSubsection[];
+  isExpanded: boolean;
 }
 
 export interface IDetailedSubsection {
@@ -36,6 +38,7 @@ export interface IDetailedSubsection {
   endDate?: string;
   location?: string;
   bullets: IBulletPoint[];
+  isExpanded: boolean;
 }
 
 /* BULLET SECTION AND POINT */
@@ -43,6 +46,7 @@ export interface IBulletSection {
   sectionType: 'bullet';
   sectionTitle: string;
   bullets: IBulletPoint[];
+  isExpanded: boolean;
 }
 
 export interface IBulletPoint {

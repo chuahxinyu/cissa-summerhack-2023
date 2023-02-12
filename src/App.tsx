@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ChooseTemplate from './components/ChooseTemplate';
+import { INITIAL_FORM_STATE } from './components/constants';
 import InputData from './components/InputData';
 import Preview from './components/Preview';
 import { IResumeData } from './components/types';
@@ -7,8 +8,7 @@ import { IResumeData } from './components/types';
 function App() {
   const RESUME_DATA_INITIAL: IResumeData = {
     template: 'Template 1 Name',
-    aboutMe: { name: '' },
-    sections: [],
+    ...INITIAL_FORM_STATE,
   };
   const [resumeData, setResumeData] = useState<IResumeData>(RESUME_DATA_INITIAL);
 
@@ -32,8 +32,8 @@ function App() {
 
   return (
     <div className="App">
-      <InputData setResumeData={setResumeData} resumeData={resumeData} />
       <ChooseTemplate setResumeData={setResumeData} />
+      <InputData setResumeData={setResumeData} resumeData={resumeData} />
       <Preview resumeData={resumeData} />
     </div>
   );
