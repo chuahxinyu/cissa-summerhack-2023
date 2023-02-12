@@ -57,11 +57,10 @@ export const template1 = (resumeData: IResumeData) => {
           const subSections = section.subSections.map(
             (subSection) => `
           <li>
-            <h4>${subSection.title},&nbsp;${subSection.location}</h4>
-            <h5>${subSection.subtitle}&nbsp;${
-              subSection.startDate
-            }&nbsp;-&nbsp;${subSection.endDate}</h5>
-            <h5></h5>
+            <h4>${subSection.title}</h4>
+            <h5>${subSection.subtitle}</h5>
+            <h5>${subSection.location}</h5>
+            <h5>${subSection.startDate}&nbsp;-&nbsp;${subSection.endDate}</h5>
             <ul>
               ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`).join('')}
             </ul>
@@ -93,6 +92,14 @@ body {
 }
 ul {
   padding-inline-start: 1rem;
+}
+h4 {
+  margin-bottom: 0.5rem;
+}
+h5 {
+  padding: 0rem;
+  margin-top: 0rem;
+  margin-bottom: 0.5rem;
 }
 li {
   list-style-type: disc;
