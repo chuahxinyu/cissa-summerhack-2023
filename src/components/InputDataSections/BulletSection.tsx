@@ -3,8 +3,9 @@ import { Box, Card, CardContent, Checkbox, Collapse, FormControlLabel, IconButto
 import TextInputField from '../Forms/TextInputField';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BulletsList from './BulletsList';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Field } from 'formik';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const INITIAL_BULLET: IBulletPoint = {
   text: '',
@@ -15,10 +16,23 @@ interface BulletSectionProps {
   section: IBulletSection;
   index: number;
   removeFunction: () => void;
+  isUpDisabled: boolean;
+  isDownDisabled: boolean;
+  moveUpFunction: () => void;
+  moveDownFunction: () => void;
   isExpanded: boolean;
 }
 
-const BulletSection: React.FC<BulletSectionProps> = ({ section, index, removeFunction, isExpanded }) => {
+const BulletSection: React.FC<BulletSectionProps> = ({
+  section,
+  index,
+  removeFunction,
+  isExpanded,
+  isUpDisabled,
+  isDownDisabled,
+  moveUpFunction,
+  moveDownFunction,
+}) => {
   return (
     <Card variant="outlined">
       <CardContent>
@@ -37,12 +51,20 @@ const BulletSection: React.FC<BulletSectionProps> = ({ section, index, removeFun
               placeholder="eg. Skills, Achievements, Publications, Projects"
             />
           </Box>
-          <IconButton aria-label="delete" color="error" onClick={removeFunction}>
-            <DeleteIcon />
-          </IconButton>
+          <Box sx={{ display: 'flex' }}>
+            <IconButton aria-label="move up" disabled={isUpDisabled} onClick={moveUpFunction}>
+              <KeyboardArrowUpIcon />
+            </IconButton>
+            <IconButton aria-label="move down" disabled={isDownDisabled} onClick={moveDownFunction}>
+              <KeyboardArrowDownIcon />
+            </IconButton>
+            <IconButton aria-label="delete" color="error" onClick={removeFunction}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Box>
         <Collapse in={isExpanded}>
-        <BulletsList bullets={section.bullets} name={`sections.${index}.bullets`} />
+          <BulletsList bullets={section.bullets} name={`sections.${index}.bullets`} />
         </Collapse>
       </CardContent>
     </Card>

@@ -3,7 +3,7 @@ import { Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { Button, Container, Grid, Typography } from '@mui/material';
 import AboutMe from './InputDataSections/AboutMe';
-import { IResumeData } from './types';
+import { IBulletSection, IDetailedSection, IResumeData } from './types';
 import BulletSection from './InputDataSections/BulletSection';
 import DetailedSection from './InputDataSections/DetailedSection';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -46,28 +46,48 @@ const InputData = ({
         validationSchema={ERROR_MESSAGE_SCHEMA}>
         {({ dirty, isValid, values }) => (
           <Form>
-            <Grid spacing={2}>
+            <Grid>
               <AboutMe isExpanded={values.aboutMe.isExpanded} />
               <FieldArray name="sections">
                 {({ insert, remove, push }) => (
-                  <Grid spacing={2}>
+                  <Grid>
                     {values.sections.length > 0 &&
-                      values.sections.map((section, i) =>
+                      values.sections.map((section, sectionIndex) =>
                         section.sectionType === 'bullet' ? (
                           <BulletSection
-                            key={i}
+                            key={sectionIndex}
                             section={section}
-                            index={i}
-                            removeFunction={() => remove(i)}
+                            index={sectionIndex}
+                            removeFunction={() => remove(sectionIndex)}
                             isExpanded={section.isExpanded}
+                            isUpDisabled={sectionIndex === 0}
+                            isDownDisabled={sectionIndex === values.sections.length - 1}
+                            moveUpFunction={() => {
+                              remove(sectionIndex);
+                              insert(sectionIndex - 1, section);
+                            }}
+                            moveDownFunction={() => {
+                              remove(sectionIndex);
+                              insert(sectionIndex + 1, section);
+                            }}
                           />
                         ) : (
                           <DetailedSection
                             section={section}
-                            index={i}
-                            key={i}
-                            removeFunction={() => remove(i)}
+                            index={sectionIndex}
+                            key={sectionIndex}
+                            removeFunction={() => remove(sectionIndex)}
                             isExpanded={section.isExpanded}
+                            isUpDisabled={sectionIndex === 0}
+                            isDownDisabled={sectionIndex === values.sections.length - 1}
+                            moveUpFunction={() => {
+                              remove(sectionIndex);
+                              insert(sectionIndex - 1, section);
+                            }}
+                            moveDownFunction={() => {
+                              remove(sectionIndex);
+                              insert(sectionIndex + 1, section);
+                            }}
                           />
                         ),
                       )}

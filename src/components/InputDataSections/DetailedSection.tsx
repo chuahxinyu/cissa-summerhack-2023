@@ -6,15 +6,30 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Field, FieldArray } from 'formik';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { INITIAL_DETAILED_SUBSECTION } from '../constants';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 interface DetailedSectionProps {
   section: IDetailedSection;
   index: number;
   removeFunction: () => void;
+  isUpDisabled: boolean;
+  isDownDisabled: boolean;
+  moveUpFunction: () => void;
+  moveDownFunction: () => void;
   isExpanded: boolean;
 }
 
-const DetailedSection: React.FC<DetailedSectionProps> = ({ section, index, removeFunction, isExpanded }) => {
+const DetailedSection: React.FC<DetailedSectionProps> = ({
+  section,
+  index,
+  removeFunction,
+  isExpanded,
+  isUpDisabled,
+  isDownDisabled,
+  moveUpFunction,
+  moveDownFunction,
+}) => {
   return (
     <Card variant="outlined">
       <CardContent>
@@ -33,14 +48,22 @@ const DetailedSection: React.FC<DetailedSectionProps> = ({ section, index, remov
               placeholder="eg. Skills, Achievements, Publications, Projects"
             />
           </Box>
-          <IconButton aria-label="delete" color="error" onClick={removeFunction}>
-            <DeleteIcon />
-          </IconButton>
+          <Box sx={{ display: 'flex' }}>
+            <IconButton aria-label="move up" disabled={isUpDisabled} onClick={moveUpFunction}>
+              <KeyboardArrowUpIcon />
+            </IconButton>
+            <IconButton aria-label="move down" disabled={isDownDisabled} onClick={moveDownFunction}>
+              <KeyboardArrowDownIcon />
+            </IconButton>
+            <IconButton aria-label="delete" color="error" onClick={removeFunction}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Box>
         <Collapse in={isExpanded}>
           <FieldArray name={`sections.${index}.subSections`}>
-            {({ remove, push }) => (
-              <Grid direction="column" spacing={2}>
+            {({ remove, push, insert }) => (
+              <Grid>
                 {section.subSections.length > 0 &&
                   section.subSections.map((subsection, subsectionIndex) => (
                     <DetailedSubsection
@@ -49,6 +72,17 @@ const DetailedSection: React.FC<DetailedSectionProps> = ({ section, index, remov
                       namePrefix={`sections.${index}.subSections`}
                       index={subsectionIndex}
                       removeFunction={() => remove(subsectionIndex)}
+                      isUpDisabled={subsectionIndex === 0}
+                      isDownDisabled={subsectionIndex === section.subSections.length - 1}
+                      moveUpFunction={() => {
+                        remove(subsectionIndex);
+                        insert(subsectionIndex - 1, subsection);
+                      }}
+                      moveDownFunction={() => {
+                        remove(subsectionIndex);
+                        insert(subsectionIndex + 1, subsection);
+                      }}
+                      isExpanded={subsection.isExpanded}
                     />
                   ))}
                 <Button

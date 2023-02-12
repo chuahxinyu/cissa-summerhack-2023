@@ -12,7 +12,7 @@ const BulletsList = ({ bullets, name }: { bullets: IBulletPoint[]; name: string 
       {({ remove, push }) => (
         <Grid container item direction="column" id="bulletSectionTitleField">
           {bullets.map((bullet, bulletIndex) => (
-            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: '1rem' }} key={bulletIndex}>
               <CircleIcon style={{ fontSize: '0.5rem' }} />
               <Box sx={{ width: '100%' }}>
                 <TextInputField
