@@ -1,5 +1,4 @@
-import * as Yup from 'yup';
-import { Grid, Typography } from '@mui/material';
+import { Card, CardContent, Grid } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { IDetailedSubsection, IBulletPoint } from '../types';
 
@@ -14,17 +13,23 @@ const DetailedSubsection = ({
 }) => {
   console.log({ subsection: subsection });
   return (
-    <Grid spacing={2}>
-      <TextInputField
-        label="Subsection Title"
-        name={`${namePrefix}.${index}.title`}
-        inputProps={{ style: { fontSize: 40 } }}
-      />
-      <TextInputField label="Subsection Subtitle" name={`${namePrefix}.${index}.subtitle`} />
-      <TextInputField label="Date" name={`${namePrefix}.${index}.date`} placeholder="e.g. June 2020 - December 2020" />
-      <TextInputField label="Location" name={`${namePrefix}.${index}.location`} />
-      {/* TODO Bullets */}
-    </Grid>
+    <Card variant="outlined">
+      <CardContent>
+        <Grid spacing={2}>
+          <TextInputField
+            label="Subsection Title"
+            name={`${namePrefix}.${index}.title`}
+            inputProps={{ style: { fontSize: 40 } }}
+          />
+          <TextInputField label="Subsection Subtitle" name={`${namePrefix}.${index}.subtitle`} size="small" />
+          <TextInputField label="Location" name={`${namePrefix}.${index}.location`} size="small" />
+          <TextInputField label="Start Date" name={`${namePrefix}.${index}.startDate`} size="small" />
+          <TextInputField label="End Date" name={`${namePrefix}.${index}.endDate`} size="small" />
+
+          {/* TODO Bullets */}
+        </Grid>
+      </CardContent>
+    </Card>
   );
 };
 

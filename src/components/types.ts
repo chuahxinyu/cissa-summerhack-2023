@@ -32,7 +32,8 @@ export interface IDetailedSection {
 export interface IDetailedSubsection {
   title: string;
   subtitle?: string;
-  date?: string;
+  startDate?: string;
+  endDate?: string;
   location?: string;
   bullets: IBulletPoint[];
 }
