@@ -1,16 +1,29 @@
-<h1 align="center">Untitled Resume Creator [TODO change this]</h1>
+## 💡 Inspiration
+Creating a resume can be a stressful task, especially if you are unsure how to format and arrange the content in a way that is both visually appealing and professional. Having recognised this need, our team aimed to develop a resume generator with an user-friendly interface, an easy user information input system, seamless process of input and generating output. 
 
-> Create Resumes in a jiffy [TODO change this]
-> Create your resume in just a few minutes with Resume Generator! Fill out your personal information, choose from our templates and customize to make your unique resume look just the way you'd like.
+## 📔 What it does
+As per the name, Resume Lab creates a resume in just a few minute. Fill out personal information, choose from our templates and customize to make your unique resume look just the way you'd like, then you will be able to download it. 
 
-# 🔨 Getting Started
+One of the most notable features is real-time preview - when entering your information and choosing a template, users will be able to view the preview of the resume. 
 
-# ✨Feature 1
+Our website allows many ways of customisation for a variety of users at different job search stages, such as arranging content by sections, choosing from a template gallery, optional input fields, etc.
 
-- gif
-- description
+## 💻 How we built it
+* Frontend: ReactJS, TypeScript, Vite
+* CI/CD: GitHub Pages, GitHub Actions
+* Other Tools: Figma, Miro
 
-# Feature 2
+## 🔍 Challenges we ran into
+* GitHub merge conflicts are the bane of Xin Yu's existence
+* Finding good pdf-related npm packages for our creating and previewing pdfs (and navigating horrible documentation and dumb issues with spacing)
 
-- gif
-- description
+## 🎊 Accomplishments that we're proud of
+* So happy to have been able to create a fully-functional MVP despite our busy schedules, limited time and energy
+* Learnt how to time travel with git
+* Got better at TypeScript
+* Learnt/Taught React (some of us knew React and some were starting from scratch, so proud of vockiii for picking it up so quickly!!)
+* Not pulling any all-nighters
+
+## 🧭 What's next
+* More customisation options - adding sections 
+* Supporting other file formats beyond PDF
