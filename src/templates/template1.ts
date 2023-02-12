@@ -3,15 +3,17 @@ import jsPDF from 'jspdf';
 import { Dispatch, SetStateAction } from 'react';
 import { IGenerateTemplateProps } from './types';
 
+type StringOptional = string | undefined;
 
-type String = string | undefined;
-
-export const generateTemplate1 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplateProps): jsPDF => {
+export const generateTemplate1 = ({
+  resumeDataCopy,
+  setBlobUrl,
+}: IGenerateTemplateProps): jsPDF => {
   const doc = new jsPDF();
-  const htmlStringTemp = template1(resumeDataCopy)
+  const htmlStringTemp = template1(resumeDataCopy);
   doc.html(htmlStringTemp, {
     callback: async function (doc: { output: (arg0: string) => BlobPart }) {
-      let blobPDF = new Blob([doc.output('blob')], {
+      const blobPDF = new Blob([doc.output('blob')], {
         type: 'application/pdf',
       });
       const blobUrl = URL.createObjectURL(blobPDF);
@@ -21,22 +23,20 @@ export const generateTemplate1 = ({resumeDataCopy, setBlobUrl}: IGenerateTemplat
     y: 10,
   });
   return doc;
-}
+};
 
 export const template1 = (resumeData: IResumeData) => {
   const { template, aboutMe, sections } = resumeData;
 
-  const arrayToBullets = (arr: Array<String>): string => {
+  const arrayToBullets = (arr: Array<StringOptional>): string => {
     return arr
-      .map((item: String) => `<li>${item || ''}</li>`)
-      .reduce((result: string, item: string): string => (
-        result + item
-      ), '');
-  }
+      .map((item: StringOptional) => `<li>${item || ''}</li>`)
+      .reduce((result: string, item: string): string => result + item, '');
+  };
 
   const temp = {
     get aboutMeString() {
-      const infoList = [aboutMe.address, aboutMe.phoneNo, aboutMe.email]
+      const infoList = [aboutMe.address, aboutMe.phoneNo, aboutMe.email];
       return `<header>
                 <h2>${aboutMe.name}&nbsp;${aboutMe.lastName}</h2>
                 <ul>
@@ -54,28 +54,33 @@ export const template1 = (resumeData: IResumeData) => {
       // call detailed and bullet, map `section`
       const allSections = sections.map((section) => {
         if (section.sectionType === 'detailed') {
-          const subSections = section.subSections.map((subSection) => `
+          const subSections = section.subSections.map(
+            (subSection) => `
           <li>
             <h4>${subSection.title},&nbsp;${subSection.location}</h4>
-            <h5>${subSection.subtitle}&nbsp;${subSection.startDate}&nbsp;-&nbsp;${subSection.endDate}</h5>
+            <h5>${subSection.subtitle}&nbsp;${
+              subSection.startDate
+            }&nbsp;-&nbsp;${subSection.endDate}</h5>
             <h5></h5>
             <ul>
               ${subSection.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
             </ul>
        	</li>
-          `)
+          `,
+          );
           return `<section><h3>${section.sectionTitle}</h3>
 		<ul>
       ${subSections.join('\n')}
 		</ul>
-	</section>`
-        } else return `<section><h3>${section.sectionTitle}</h3>
+	</section>`;
+        } else
+          return `<section><h3>${section.sectionTitle}</h3>
 		<ul>
 			${section.bullets.map((bullet) => `<li>${bullet.text}</li>`)}
 		</ul>
-	</section>`
+	</section>`;
       });
-      console.log({allSections: allSections})
+      console.log({ allSections: allSections });
       return allSections.join('\n');
     },
   };
@@ -111,7 +116,7 @@ a:active {
     border-bottom: 1px solid rgb(0, 120, 180);
     color: rgb(0, 120, 180);
 }
-</style>`
+</style>`;
 
   const res = `
 <body>
