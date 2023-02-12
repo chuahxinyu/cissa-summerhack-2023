@@ -1,9 +1,11 @@
-import { Box, Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
 import TextInputField from '../Forms/TextInputField';
 import { IDetailedSection } from '../types';
 import DetailedSubsection from './DetailedSubsection';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { FieldArray } from 'formik';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { INITIAL_DETAILED_SUBSECTION } from '../constants';
 
 interface DetailedSectionProps {
   section: IDetailedSection;
@@ -27,9 +29,9 @@ const DetailedSection: React.FC<DetailedSectionProps> = ({ section, index, remov
             <DeleteIcon />
           </IconButton>
         </Box>
-        <FieldArray name={`sections.${index}.subsections`}>
+        <FieldArray name={`sections.${index}.subSections`}>
           {({ remove, push }) => (
-            <Grid container item direction="column" id="bulletSectionTitleField">
+            <Grid direction="column" spacing={2}>
               {section.subSections.length > 0 &&
                 section.subSections.map((subsection, subsectionIndex) => (
                   <DetailedSubsection
@@ -39,6 +41,15 @@ const DetailedSection: React.FC<DetailedSectionProps> = ({ section, index, remov
                     index={subsectionIndex}
                   />
                 ))}
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  console.log('push subsection');
+                  push(INITIAL_DETAILED_SUBSECTION);
+                }}
+                startIcon={<AddCircleOutlineIcon />}>
+                Add Detailed Subsection
+              </Button>
             </Grid>
           )}
         </FieldArray>
